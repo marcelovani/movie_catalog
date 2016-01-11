@@ -36,7 +36,7 @@ endpoint_route(array(
 
 function my_module_foo_list() {
   // ...
-  return array('foos' => $foo_collection);
+  return array('foos' => 'baar');
 }
 
 function my_module_foo_create() {

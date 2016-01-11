@@ -34,4 +34,6 @@ xmlrpc.php
 /misc
 /scripts
 /themes
+modules/contrib
+libraries
 
