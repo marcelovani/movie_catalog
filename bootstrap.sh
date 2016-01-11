@@ -4,7 +4,7 @@ set +x
 echo
 echo "[Info] Bootstrap is cloning the repo"
 
-git clone --branch 7.x-1.x https://git.drupal.org/sandbox/marcelovani/2648246.git 
+git clone --branch 7.x-1.x https://git.drupal.org/sandbox/marcelovani/2648246.git movie_catalog
 
 echo "[Info] Bootstrap has finished installation."
 echo
