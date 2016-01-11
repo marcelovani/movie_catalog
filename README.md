@@ -2,6 +2,9 @@ Movie Catalog
 =============
 
 You can catalog your movies.
+It has APIs that can obtain data from IMDB.
+Also, provides an end point to accept requests that update the catalog.
+
 
 Prerequisites
 
