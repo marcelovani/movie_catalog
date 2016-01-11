@@ -7,8 +7,12 @@ INSTALL_DIR=$1
 function f_install_profile() {
   echo "[INFO] Installing profile"
   drush make --prepare-install build-movie_catalog.make ${INSTALL_DIR}
-  cd ${INSTALL_DIR}/sites/default
-  drush si -y mv --db-url="mysql://root@localhost/movie_catalog" --site-name="Movie Catalog" --account-name=admin --account-pass=password --sites-subdir=default
+
+  cd ${INSTALL_DIR}
+  ln -s profiles/movie_catalog/api.php api.php
+
+  cd sites/default
+  drush si -y movie_catalog --db-url="mysql://root@localhost/movie_catalog" --site-name="Movie Catalog" --account-name=admin --account-pass=password --sites-subdir=default
 }
 
 f_install_profile
