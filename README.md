@@ -17,7 +17,7 @@ Installation
   $ cd /tmp
 
   2 - Copy and paste this into your shell to install everything:
-  $ curl -L -s http://goo.gl/nuf3J1 | bash
+  $ curl -L -s http://goo.gl/UmWrmz | bash
 
   3 - Go inside the folder
   $ cd movie_catalog
