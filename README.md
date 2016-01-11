@@ -13,14 +13,15 @@ Drush
 
 Installation
 
-  Go to a temporary folder
+  1 - Go to a temporary folder
   $ cd /tmp
 
-  Copy and paste this into your shell to install everything:
+  2 - Copy and paste this into your shell to install everything:
   $ curl -L -s http://goo.gl/nuf3J1 | bash
 
-  Go inside the folder
+  3 - Go inside the folder
   $ cd movie_catalog
   
-  Run install i.e.
+  4 - Run install i.e.
   $ ./install.sh /Users/marcelo/Sites/movie_catalog
+
