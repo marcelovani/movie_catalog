@@ -1,0 +1,41 @@
+; $Id $
+name = Movie Catalog
+description = Catalog your movies
+core = 7.x
+
+; Core
+dependencies[] = block
+dependencies[] = contextual
+dependencies[] = dashboard
+dependencies[] = help
+dependencies[] = image
+dependencies[] = list
+dependencies[] = menu
+dependencies[] = number
+dependencies[] = options
+dependencies[] = path
+dependencies[] = taxonomy
+dependencies[] = search
+dependencies[] = shortcut
+dependencies[] = field
+dependencies[] = field_ui
+dependencies[] = file
+
+
+; Contrib
+dependencies[] = admin_menu
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = entity
+dependencies[] = features
+dependencies[] = features_override
+dependencies[] = pathauto
+dependencies[] = strongarm
+dependencies[] = token
+dependencies[] = views
+dependencies[] = views_content
+dependencies[] = views_ui
+dependencies[] = libraries
+
+; Profile
+;dependencies[] = 
