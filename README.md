@@ -14,7 +14,7 @@ Installation
   $ cd /tmp
 
   Copy and paste this into your shell to install everything:
-  $ curl -L -s http://goo.gl/??? | bash
+  $ curl -L -s http://goo.gl/nuf3J1 | bash
 
   Go inside the folder
   $ cd movie_catalog
