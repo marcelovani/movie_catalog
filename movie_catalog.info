@@ -20,7 +20,7 @@ dependencies[] = shortcut
 dependencies[] = field
 dependencies[] = field_ui
 dependencies[] = file
-
+dependencies[] = endpoint
 
 ; Contrib
 dependencies[] = admin_menu

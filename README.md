@@ -25,3 +25,10 @@ Installation
   4 - Run install i.e.
   $ ./install.sh /Users/marcelo/Sites/movie_catalog
 
+  5 - Edit .htaccess file and paste
+  	Rewrite API callback URLs of the form api.php?q=x.
+	RewriteCond %{REQUEST_URI} ^\/([a-z]{2}\/)?api\/.*
+	RewriteRule ^(.*)$ api.php?q=$1 [L,QSA]
+	RewriteCond %{QUERY_STRING} (^|&)q=(\/)?(\/)?api\/.*
+	RewriteRule .* api.php [L]
+	
