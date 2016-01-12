@@ -49,22 +49,39 @@ function movie_catalog_add_movie() {
 
   drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
-  $node = new stdClass();
-  $node->type = "movies";
-  node_object_prepare($node);
+  $content_type = 'movies';
+
+  // Check if entry already exists.
+  $result = db_select('field_data_field_imdb_id', 'i')
+    ->fields('i', array('entity_id'))
+    ->condition('field_imdb_id_value', $data->imdb_id, '=')
+    ->condition('language', LANGUAGE_NONE, '=')
+    ->execute()
+    ->fetchAssoc();
+
+  if ($result === FALSE) {
+    // Create new node.
+    $node = new stdClass();
+    $node->type = $content_type;
+    node_object_prepare($node);
+  } else {
+    // Update node.
+    $node = node_load($result['entity_id']);
+  }
 
   $node->title = $data->title;
-  $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+  $node->language = LANGUAGE_NONE;
 
   if (is_array($data->plot)) {
     $body =  '<p>' . implode('</p>' . PHP_EOL . PHP_EOL . '<p>', $data->plot) . '</p>';
   } else {
     $body = $data->plot;
   }
-
   $node->body[$node->language][0]['value']   = $body;
   $node->body[$node->language][0]['summary'] = text_summary($body);
   $node->body[$node->language][0]['format']  = 'filtered_html';
+
+  $node->field_imdb_id[$node->language][0]['value'] = $data->imdb_id;
 
   //$node->path = array('alias' => $path);
   // Disable pathauto for this node
@@ -89,6 +106,17 @@ function movie_catalog_add_movie() {
   node_submit($node);
 
   node_save($node);
+
+  // Save rating.
+  $rating = $data->rating * 100 / 10;
+  $votes = array(
+    'entity_type' => 'node',
+    'entity_id' => $node->nid,
+    'value_type' => 'percent',
+    'value' => $rating,
+    'tag' => 'vote',
+  );
+  votingapi_set_votes($votes, array('entity_id' => $node->nid));
 
   // ...
   return array('node' => $node);
