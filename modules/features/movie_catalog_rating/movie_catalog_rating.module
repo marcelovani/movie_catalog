@@ -5,3 +5,10 @@
  */
 
 include_once 'movie_catalog_rating.features.inc';
+
+/**
+ * Alter the fivestar template.
+ */
+function movie_catalog_rating_process_rate_template_fivestar(&$variables) {
+  $variables['info'] = $variables['results']['rating'] / 10;
+}
