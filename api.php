@@ -45,85 +45,40 @@ function my_module_foo_list() {
 }
 
 function movie_catalog_add_movie() {
-  $data = endpoint_request_data();
-
   drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
-  $content_type = 'movies';
+  $movie_data = endpoint_request_data();
+  $imdb_id = check_plain($movie_data->imdb_id);
 
   // Check if entry already exists.
   $result = db_select('field_data_field_imdb_id', 'i')
     ->fields('i', array('entity_id'))
-    ->condition('field_imdb_id_value', $data->imdb_id, '=')
+    ->condition('field_imdb_id_value', $imdb_id, '=')
     ->condition('language', LANGUAGE_NONE, '=')
     ->execute()
     ->fetchAssoc();
 
-  if ($result === FALSE) {
-    // Create new node.
-    $node = new stdClass();
-    $node->type = $content_type;
-    node_object_prepare($node);
-  } else {
+  if ($result !== FALSE) {
     // Update node.
     $node = node_load($result['entity_id']);
-  }
-
-  $node->title = $data->title;
-  $node->language = LANGUAGE_NONE;
-
-  if (is_array($data->plot)) {
-    $body =  '<p>' . implode('</p>' . PHP_EOL . PHP_EOL . '<p>', $data->plot) . '</p>';
   } else {
-    $body = $data->plot;
+    // Create new node.
+    $node = new stdClass();
+    $node->type = 'movies';
+    node_object_prepare($node);
   }
-  $node->body[$node->language][0]['value']   = $body;
-  $node->body[$node->language][0]['summary'] = text_summary($body);
-  $node->body[$node->language][0]['format']  = 'filtered_html';
 
-  $node->field_imdb_id[$node->language][0]['value'] = $data->imdb_id;
-
-  $node->field_rating[$node->language][0]['value'] = $data->rating;
-
+  // Populate node values.
+  $node->title = check_plain($movie_data->title);
+  $node->language = LANGUAGE_NONE;
+  $node->body[$node->language][0] = movie_catalog_prepare_field_body($movie_data->plot, 'filtered_html');
+  $node->field_imdb_id[$node->language][0]['value'] = $imdb_id;
+  $node->field_rating[$node->language][0]['value'] = check_plain($movie_data->rating);
   // Genres (Autocomplete field)
-  $genres = is_array($data->genres)
-    ? implode(',', $data->genres)
-    : $data->genres;
-
-  // Get field info to figure out which dictionary to use.
-  $field_info = field_info_field('field_genres');
-  $vocab_name = $field_info['settings']['allowed_values'][0]['vocabulary'];
-  $vocabulary = taxonomy_vocabulary_machine_name_load($vocab_name);
-
-  // Translate term names into actual terms.
-  $typed_terms = drupal_explode_tags($genres);
-
-  foreach ($typed_terms as $typed_term) {
-    // See if the term exists in the chosen vocabulary and return the tid;
-    // otherwise, create a new 'autocreate' term for insert/update.
-    if ($possibilities = taxonomy_term_load_multiple(array(), array('name' => trim($typed_term), 'vid' => $vocabulary->vid))) {
-      $term = array_pop($possibilities);
-    }
-    else {
-      $term = array(
-        'tid' => 'autocreate',
-        'vid' => $vocabulary->vid,
-        'name' => $typed_term,
-        'vocabulary_machine_name' => $vocabulary->machine_name,
-      );
-    }
-    $value[] = (array)$term;
-  }
-  $node->field_genres[$node->language] = $value;
-
-
-  //$node->path = array('alias' => $path);
-  // Disable pathauto for this node
-  //$node->path['pathauto'] = '';
-
-  $node->status = 1; //(1 or 0): published or not
-  $node->promote = 0; //(1 or 0): promoted to front page
-  $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
+  $node->field_genres[$node->language] = movie_catalog_prepare_term_autocomplete('genres', $movie_data->genres);
+  $node->status = 1;
+  $node->promote = 0;
+  $node->comment = 0;
 
   // Term reference (taxonomy) field
   //$node->field_genres[$node->language][]['tid'] = $form_state['values']['a taxonomy term id'];
@@ -138,10 +93,8 @@ function movie_catalog_add_movie() {
   // 'node' is default,
 
   node_submit($node);
-
   node_save($node);
 
-  // ...
   return array('node' => $node);
 }
 
@@ -158,4 +111,69 @@ function my_module_foo_update() {
 function my_module_callback_authorize() {
   return TRUE;
   // ...
+}
+
+/**
+ * Helper to prepare value for body.
+ *
+ * @param $value
+ * @param $format_id
+ * @return array
+ */
+function movie_catalog_prepare_field_body($value, $format_id) {
+  // Clean array.
+  if (is_array($value)) {
+    foreach ($value as $key => $item) {
+      $value[$key] = check_markup($item, $format_id);
+    }
+    $value = '<p>' . implode('</p>' . "\n\n" . '<p>', $value) . '</p>';
+  } else {
+    $value = check_markup($value, $format_id);
+  }
+
+  print($value);
+  //$value = check_markup($value, $format);
+  //print($value);
+  //$value = str_replace('</p><p>', '</p>' . "\n\n" . '<p>', $value);
+  return array(
+    'value' => $value,
+    'summary' => text_summary($value),
+    'format' => $format_id,
+  );
+}
+
+/**
+ * Helper to populate Tids for multiple values autocomplete term reference field.
+ *
+ * @param $field_name
+ * @param $vocab_name
+ * @param $value
+ */
+function movie_catalog_prepare_term_autocomplete($vocab_name, $value) {
+  $value = is_array($value)
+    ? implode(',', $value)
+    : $value;
+  $value = check_plain($value);
+
+  $vocabulary = taxonomy_vocabulary_machine_name_load($vocab_name);
+
+  $values = array();
+  foreach (drupal_explode_tags($value) as $term_entry) {
+    // See if the term exists in the chosen vocabulary and return the tid;
+    // otherwise, create a new 'autocreate' term for insert/update.
+    if ($possibilities = taxonomy_term_load_multiple(array(), array('name' => trim($term_entry), 'vid' => $vocabulary->vid))) {
+      $term = array_pop($possibilities);
+    }
+    else {
+      $term = array(
+        'tid' => 'autocreate',
+        'vid' => $vocabulary->vid,
+        'name' => $term_entry,
+        'vocabulary_machine_name' => $vocabulary->machine_name,
+      );
+    }
+    $values[] = (array)$term;
+  }
+
+  return $values;
 }
