@@ -56,7 +56,12 @@ function movie_catalog_add_movie() {
   $node->title = $data->title;
   $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
 
-  $body = implode('<br>', $data->plot);
+  if (is_array($data->plot)) {
+    $body =  '<p>' . implode('</p>' . PHP_EOL . PHP_EOL . '<p>', $data->plot) . '</p>';
+  } else {
+    $body = $data->plot;
+  }
+
   $node->body[$node->language][0]['value']   = $body;
   $node->body[$node->language][0]['summary'] = text_summary($body);
   $node->body[$node->language][0]['format']  = 'filtered_html';
@@ -66,8 +71,8 @@ function movie_catalog_add_movie() {
   //$node->path['pathauto'] = '';
 
   $node->status = 1; //(1 or 0): published or not
-  //$node->promote = 0; //(1 or 0): promoted to front page
-  //$node->comment = 1; // 0 = comments disabled, 1 = read only, 2 = read/write
+  $node->promote = 0; //(1 or 0): promoted to front page
+  $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
 
   // Term reference (taxonomy) field
   //$node->field_product_tid[$node->language][]['tid'] = $form_state['values']['a taxonomy term id'];
@@ -81,7 +86,8 @@ function movie_catalog_add_movie() {
   */
   // 'node' is default,
 
-  //$node = node_submit($node); // Prepare node for saving
+  node_submit($node);
+
   node_save($node);
 
   // ...

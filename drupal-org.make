@@ -1,6 +1,12 @@
 api = 2
 core = 7.x
 
+projects[diff][subdir] = contrib
+projects[diff][version] = 3.2
+
+projects[ckeditor][subdir] = contrib
+projects[ckeditor][version] = 1.7
+
 projects[endpoint][subdir] = contrib
 projects[endpoint][version] = 1.4
 
