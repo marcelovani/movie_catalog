@@ -14,11 +14,13 @@ $routes = array(
     ),
     'POST' => array(
       'callback' => 'my_module_foo_create',
+      'anonymous'  => TRUE,
     ),
   ),
   'api/v1/foo/(\w+)' => array(
     'GET' => array(
       'callback' => 'my_module_foo_get',
+      'anonymous'  => TRUE,
     ),
     'POST' => array(
       'include' => DRUPAL_ROOT . '/sites/all/modules/custom/another_module/includes/some_callback.inc',
@@ -28,30 +30,75 @@ $routes = array(
 );
 
 endpoint_route(array(
-  'debug' => TRUE,
+  //'debug' => TRUE,
   'routes' => $routes,
-//  'authorize callback' => 'my_module_callback_authorize',
+  //'authorize callback' => 'my_module_callback_authorize',
 //  'error callback' => 'my_module_callback_error',
 ));
 
 function my_module_foo_list() {
   // ...
-  return array('foos' => 'baar');
+  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+
+  $node = node_load(1);
+  return array('node' => $node);
 }
 
 function my_module_foo_create() {
   $data = endpoint_request_data();
+
+  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+
+  $node = new stdClass();
+  $node->type = "movies";
+  node_object_prepare($node);
+
+  $node->title = $data->title;
+  $node->language = LANGUAGE_NONE; // Or e.g. 'en' if locale is enabled
+
+  $body = implode('<br>', $data->plot);
+  $node->body[$node->language][0]['value']   = $body;
+  $node->body[$node->language][0]['summary'] = text_summary($body);
+  $node->body[$node->language][0]['format']  = 'filtered_html';
+
+  //$node->path = array('alias' => $path);
+  // Disable pathauto for this node
+  //$node->path['pathauto'] = '';
+
+  $node->status = 1; //(1 or 0): published or not
+  //$node->promote = 0; //(1 or 0): promoted to front page
+  //$node->comment = 1; // 0 = comments disabled, 1 = read only, 2 = read/write
+
+  // Term reference (taxonomy) field
+  //$node->field_product_tid[$node->language][]['tid'] = $form_state['values']['a taxonomy term id'];
+
+  // Entity reference field
+  /*
+  $node->field_customer_nid[$node->language][] = array(
+    'target_id' => $form_state['values']['entity id'],
+    'target_type' => 'node',
+  );
+  */
+  // 'node' is default,
+
+  //$node = node_submit($node); // Prepare node for saving
+  node_save($node);
+
   // ...
-  return array('foo' => $foo, 'bar' => $bar);
+  return array('node' => $node);
 }
 
 function my_module_foo_get($id) {
   // ...
-  return array('foo' => $foo, 'bar' => $bar);
+  return array('id' => $id);
 }
 
 function my_module_foo_update() {
   $data = endpoint_request_data();
   // ...
 }
-?>
+
+function my_module_callback_authorize() {
+  return TRUE;
+  // ...
+}
