@@ -83,7 +83,7 @@ function movie_catalog_add_movie() {
 
   $node->field_imdb_id[$node->language][0]['value'] = $data->imdb_id;
 
-  $node->field_rating[$node->language][0]['value'] = $data->rating / 10;
+  $node->field_rating[$node->language][0]['value'] = $data->rating;
 
   //$node->path = array('alias' => $path);
   // Disable pathauto for this node
