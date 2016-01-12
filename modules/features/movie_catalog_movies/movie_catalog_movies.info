@@ -5,7 +5,6 @@ package = Features
 dependencies[] = features
 dependencies[] = node
 dependencies[] = number
-dependencies[] = rate
 dependencies[] = strongarm
 dependencies[] = text
 features[ctools][] = strongarm:strongarm:1
