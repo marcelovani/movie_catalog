@@ -73,6 +73,8 @@ function movie_catalog_rating_strongarm() {
       'teaser_display_mode' => '2',
       'comment_display_mode' => '1',
       'roles' => array(
+        4 => '4',
+        3 => 0,
         1 => 0,
         2 => 0,
       ),

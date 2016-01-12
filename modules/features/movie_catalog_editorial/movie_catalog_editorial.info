@@ -15,3 +15,5 @@ features[user_permission][] = administer ckeditor
 features[user_permission][] = administer filters
 features[user_permission][] = customize ckeditor
 features[user_permission][] = use text format filtered_html
+features[user_role][] = admin
+features[user_role][] = editor
