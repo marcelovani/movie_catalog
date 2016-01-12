@@ -7,8 +7,33 @@
 include_once 'movie_catalog_rating.features.inc';
 
 /**
- * Alter the fivestar template.
+ * Implements hook_preprocess_field();
+ * @param $variables
  */
-function movie_catalog_rating_process_rate_template_fivestar(&$variables) {
-  $variables['info'] = $variables['results']['rating'] / 10;
+function movie_catalog_rating_preprocess_field(&$variables) {
+  $element = $variables['element'];
+  if ($element['#field_name'] == 'field_rating') {
+    $value = &$variables['items'][0]['#markup'];
+
+    // Remove zeros.
+    $value = str_replace('0', '', $value);
+    $value = $value == '0' ? '' : $value;
+
+    // Add stars.
+    $variables['items'][0]['#prefix'] = '';
+    $stars = &$variables['items'][0]['#prefix'];
+    for ($i=0; $i <intval($value); $i++) {
+      $stars .= '<span class="star"></span>';
+    }
+
+    // Add span.
+    $value = '<span class="rating">' . $value . '</span>';
+  }
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function movie_catalog_rating_page_alter(&$page) {
+  drupal_add_css(drupal_get_path('module', 'movie_catalog_rating') . '/movie_catalog_rating.css');
 }

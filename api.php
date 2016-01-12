@@ -83,6 +83,8 @@ function movie_catalog_add_movie() {
 
   $node->field_imdb_id[$node->language][0]['value'] = $data->imdb_id;
 
+  $node->field_rating[$node->language][0]['value'] = $data->rating / 10;
+
   //$node->path = array('alias' => $path);
   // Disable pathauto for this node
   //$node->path['pathauto'] = '';
@@ -106,17 +108,6 @@ function movie_catalog_add_movie() {
   node_submit($node);
 
   node_save($node);
-
-  // Save rating.
-  $rating = $data->rating * 100 / 10;
-  $votes = array(
-    'entity_type' => 'node',
-    'entity_id' => $node->nid,
-    'value_type' => 'percent',
-    'value' => $rating,
-    'tag' => 'vote',
-  );
-  votingapi_set_votes($votes, array('entity_id' => $node->nid));
 
   // ...
   return array('node' => $node);

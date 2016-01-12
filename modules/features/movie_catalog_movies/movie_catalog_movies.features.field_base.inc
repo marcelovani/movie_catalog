@@ -52,5 +52,22 @@ function movie_catalog_movies_field_default_field_bases() {
     'type' => 'text',
   );
 
+  // Exported field_base: 'field_rating'.
+  $field_bases['field_rating'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_rating',
+    'indexes' => array(),
+    'locked' => 0,
+    'module' => 'number',
+    'settings' => array(
+      'decimal_separator' => '.',
+    ),
+    'translatable' => 0,
+    'type' => 'number_float',
+  );
+
   return $field_bases;
 }

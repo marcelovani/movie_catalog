@@ -1,12 +1,6 @@
 api = 2
 core = 7.x
 
-projects[rate][subdir] = contrib
-projects[rate][version] = 1.7
-
-projects[votingapi][subdir] = contrib
-projects[votingapi][version] = 2.12
-
 projects[diff][subdir] = contrib
 projects[diff][version] = 3.2
 
