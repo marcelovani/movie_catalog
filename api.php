@@ -7,13 +7,13 @@ define('DRUPAL_ROOT', getcwd());
 require_once DRUPAL_ROOT . '/profiles/movie_catalog/modules/contrib/endpoint/includes/router.inc';
 
 $routes = array(
-  'api/v1/foos' => array(
+  'api/imdb/movie/add' => array(
     'GET' => array(
       'callback' => 'my_module_foo_list',
       'anonymous'  => TRUE,
     ),
     'POST' => array(
-      'callback' => 'my_module_foo_create',
+      'callback' => 'movie_catalog_add_movie',
       'anonymous'  => TRUE,
     ),
   ),
@@ -44,7 +44,7 @@ function my_module_foo_list() {
   return array('node' => $node);
 }
 
-function my_module_foo_create() {
+function movie_catalog_add_movie() {
   $data = endpoint_request_data();
 
   drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
