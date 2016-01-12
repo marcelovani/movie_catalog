@@ -85,6 +85,38 @@ function movie_catalog_add_movie() {
 
   $node->field_rating[$node->language][0]['value'] = $data->rating;
 
+  // Genres (Autocomplete field)
+  $genres = is_array($data->genres)
+    ? implode(',', $data->genres)
+    : $data->genres;
+
+  // Get field info to figure out which dictionary to use.
+  $field_info = field_info_field('field_genres');
+  $vocab_name = $field_info['settings']['allowed_values'][0]['vocabulary'];
+  $vocabulary = taxonomy_vocabulary_machine_name_load($vocab_name);
+
+  // Translate term names into actual terms.
+  $typed_terms = drupal_explode_tags($genres);
+
+  foreach ($typed_terms as $typed_term) {
+    // See if the term exists in the chosen vocabulary and return the tid;
+    // otherwise, create a new 'autocreate' term for insert/update.
+    if ($possibilities = taxonomy_term_load_multiple(array(), array('name' => trim($typed_term), 'vid' => $vocabulary->vid))) {
+      $term = array_pop($possibilities);
+    }
+    else {
+      $term = array(
+        'tid' => 'autocreate',
+        'vid' => $vocabulary->vid,
+        'name' => $typed_term,
+        'vocabulary_machine_name' => $vocabulary->machine_name,
+      );
+    }
+    $value[] = (array)$term;
+  }
+  $node->field_genres[$node->language] = $value;
+
+
   //$node->path = array('alias' => $path);
   // Disable pathauto for this node
   //$node->path['pathauto'] = '';
@@ -94,7 +126,7 @@ function movie_catalog_add_movie() {
   $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
 
   // Term reference (taxonomy) field
-  //$node->field_product_tid[$node->language][]['tid'] = $form_state['values']['a taxonomy term id'];
+  //$node->field_genres[$node->language][]['tid'] = $form_state['values']['a taxonomy term id'];
 
   // Entity reference field
   /*

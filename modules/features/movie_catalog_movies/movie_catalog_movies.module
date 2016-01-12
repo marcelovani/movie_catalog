@@ -5,3 +5,7 @@
  */
 
 include_once 'movie_catalog_movies.features.inc';
+
+function movie_catalog_movies_node_presave($node){
+//  print_r($node);exit;
+}
