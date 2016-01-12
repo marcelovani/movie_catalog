@@ -74,7 +74,7 @@ function movie_catalog_add_movie() {
   $node->body[$node->language][0] = movie_catalog_prepare_field_body($movie_data->plot, 'filtered_html');
   $node->field_imdb_id[$node->language][0]['value'] = $imdb_id;
   $node->field_rating[$node->language][0]['value'] = check_plain($movie_data->rating);
-  // Genres (Autocomplete field)
+  // Genres (Autocomplete field).
   $node->field_genres[$node->language] = movie_catalog_prepare_term_autocomplete('genres', $movie_data->genres);
   $node->status = 1;
   $node->promote = 0;
