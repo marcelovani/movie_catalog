@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Movie Catalog: Rating feature.
+ */
+
+include_once 'movie_catalog_rating.features.inc';
