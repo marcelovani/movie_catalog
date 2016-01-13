@@ -1,6 +1,8 @@
 <?php
 // $Id$
 
+require_once('movie_catalog.module');
+
 /**
  * Implements hook_form_alter().
  */
