@@ -186,7 +186,7 @@ function movie_catalog_prepare_remote_image($remote_url, $local_filename) {
     ->condition('filename', $local_filename)
     ->execute();
 
-  if (!$result->fetchCol()) {
+  if (!$fid = $result->fetchCol()) {
     // Load remote file.
     $file_contents = file_get_contents($remote_url);
 
@@ -195,7 +195,13 @@ function movie_catalog_prepare_remote_image($remote_url, $local_filename) {
     file_prepare_directory($picture_directory, FILE_CREATE_DIRECTORY);
     $destination = file_stream_wrapper_uri_normalize($picture_directory . '/' . $local_filename);
     $file = file_save_data($file_contents, $destination, FILE_EXISTS_RENAME);
-
+  }
+  else {
+    if (is_array($fid)) {
+      $file = file_load(current($fid));
+    }
+  }
+  if (is_object($file)) {
     return get_object_vars($file);
   }
 }
