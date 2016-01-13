@@ -44,8 +44,7 @@ function movie_catalog_bootstrap() {
 function my_module_foo_list() {
   // ...
 
-  $node = node_load(1);
-  return array('node' => $node);
+  return array('result' => 'no action');
 }
 
 function movie_catalog_add_movie() {
