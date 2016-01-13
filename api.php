@@ -38,7 +38,7 @@ endpoint_route(array(
 ));
 
 function movie_catalog_bootstrap() {
-  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+
 }
 
 function my_module_foo_list() {
@@ -84,7 +84,7 @@ function movie_catalog_add_movie() {
     )
   );
 
-  return array('node' => '???');
+  return array('result' => 'queued');
 }
 
 function my_module_foo_get($id) {
