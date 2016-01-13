@@ -14,6 +14,40 @@ function movie_catalog_movies_ctools_plugin_api($module = NULL, $api = NULL) {
 }
 
 /**
+ * Implements hook_image_default_styles().
+ */
+function movie_catalog_movies_image_default_styles() {
+  $styles = array();
+
+  // Exported image style: cover.
+  $styles['cover'] = array(
+    'label' => 'Cover',
+    'effects' => array(
+      2 => array(
+        'name' => 'image_scale',
+        'data' => array(
+          'width' => 350,
+          'height' => '',
+          'upscale' => 1,
+        ),
+        'weight' => -10,
+      ),
+      3 => array(
+        'name' => 'image_crop',
+        'data' => array(
+          'width' => 350,
+          'height' => 500,
+          'anchor' => 'center-center',
+        ),
+        'weight' => 3,
+      ),
+    ),
+  );
+
+  return $styles;
+}
+
+/**
  * Implements hook_node_info().
  */
 function movie_catalog_movies_node_info() {

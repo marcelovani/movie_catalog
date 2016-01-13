@@ -21,6 +21,7 @@ features[field_instance][] = node-movies-field_cover
 features[field_instance][] = node-movies-field_genres
 features[field_instance][] = node-movies-field_imdb_id
 features[field_instance][] = node-movies-field_rating
+features[image][] = cover
 features[node][] = movies
 features[taxonomy][] = genres
 features[user_permission][] = create movies content
