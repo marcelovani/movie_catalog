@@ -34,21 +34,29 @@ endpoint_route(array(
   'routes' => $routes,
   //'authorize callback' => 'my_module_callback_authorize',
 //  'error callback' => 'my_module_callback_error',
+    'before execute callback' => 'movie_catalog_bootstrap',
 ));
+
+function movie_catalog_bootstrap() {
+  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+}
 
 function my_module_foo_list() {
   // ...
-  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
   $node = node_load(1);
   return array('node' => $node);
 }
 
 function movie_catalog_add_movie() {
-  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
-
   $movie_data = endpoint_request_data();
-  $imdb_id = check_plain($movie_data->imdb_id);
+
+  if (isset($movie_data->imdb_id)) {
+    $imdb_id = check_plain($movie_data->imdb_id);
+  }
+  else {
+    watchdog('error', 'Invalid data passed to end point', array(), WATCHDOG_ALERT);
+  }
 
   // Check if entry already exists.
   $result = db_select('field_data_field_imdb_id', 'i')
@@ -69,13 +77,25 @@ function movie_catalog_add_movie() {
   }
 
   // Populate node values.
-  $node->title = check_plain($movie_data->title);
+  if (isset($movie_data->title)) {
+    $node->title = check_plain($movie_data->title);
+  }
   $node->language = LANGUAGE_NONE;
-  $node->body[$node->language][0] = movie_catalog_prepare_field_body($movie_data->plot, 'filtered_html');
+  if (isset($movie_data->plot)) {
+    $node->body[$node->language][0] = movie_catalog_prepare_field_body($movie_data->plot, 'filtered_html');
+  }
   $node->field_imdb_id[$node->language][0]['value'] = $imdb_id;
-  $node->field_rating[$node->language][0]['value'] = check_plain($movie_data->rating);
+  if (isset($movie_data->rating)) {
+    $node->field_rating[$node->language][0]['value'] = check_plain($movie_data->rating);
+  }
   // Genres (Autocomplete field).
-  $node->field_genres[$node->language] = movie_catalog_prepare_term_autocomplete('genres', $movie_data->genres);
+  if (isset($movie_data->genres)) {
+    $node->field_genres[$node->language] = movie_catalog_prepare_term_autocomplete('genres', $movie_data->genres);
+  }
+  if (isset($movie_data->cover)) {
+    $node->field_cover_url[$node->language][0]['value'] = check_plain($movie_data->cover);
+  }
+  //$node->field_cover[$node->language] = movie_catalog_prepare_remote_image($movie_data->cover);
   $node->status = 1;
   $node->promote = 0;
   $node->comment = 0;
@@ -124,17 +144,13 @@ function movie_catalog_prepare_field_body($value, $format_id) {
   // Clean array.
   if (is_array($value)) {
     foreach ($value as $key => $item) {
-      $value[$key] = check_markup($item, $format_id);
+      $value[$key] = '<p>' . check_markup($item, $format_id) . '</p>';
     }
-    $value = '<p>' . implode('</p>' . "\n\n" . '<p>', $value) . '</p>';
+    $value = implode("\n", $value);
   } else {
     $value = check_markup($value, $format_id);
   }
 
-  print($value);
-  //$value = check_markup($value, $format);
-  //print($value);
-  //$value = str_replace('</p><p>', '</p>' . "\n\n" . '<p>', $value);
   return array(
     'value' => $value,
     'summary' => text_summary($value),
