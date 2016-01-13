@@ -22,6 +22,10 @@ function movie_catalog_cron_queue_info() {
 function movie_catalog_process_queue_item($data) {
   switch (strtolower($data['op'])) {
     case 'add':
+        if ($node = node_load($data['movie']->entity_id)) {
+          // Prevent processing an item that was added twice to the queue.
+          return;
+        }
         // Create new node.
         $node = new stdClass();
         $node->type = $data['type'];
