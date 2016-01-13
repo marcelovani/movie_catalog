@@ -6,6 +6,44 @@
 
 include_once 'movie_catalog_movies.features.inc';
 
-function movie_catalog_movies_node_presave($node){
-//  print_r($node);exit;
+/**
+ * Little hack to update the cover the first time the node is viewed.
+ * Had to do this because the api.php cannot work well with stream wrapper.
+ * @todo find a better solution.
+ *
+ * @param $node
+ * @param string $view_mode
+ * @param null $langcode
+ */
+function movie_catalog_node_view($node, $view_mode = 'full', $langcode = NULL) {
+  if ($view_mode != 'full') {
+    return;
+  }
+  $local = array();
+  module_load_include('inc', 'pathauto');
+
+  // Get cover url.
+  $cover_url = $node->field_cover_url[$node->language][0]['value'];
+  $source_info = new SplFileInfo($cover_url);
+  $local['filename'] = pathauto_cleanstring($node->title) . '_' . $node->nid . '.' . $source_info->getExtension();
+
+  $result = db_select('file_managed', 'f')
+    ->fields('f', array('fid'))
+    ->condition('filename', $local['filename'])
+    ->execute();
+
+  if (!$result->fetchCol()) {
+    // Load remote file.
+    $local[$cover_url] = file_get_contents($cover_url);
+
+    // Save file.
+    $picture_directory = variable_get('file_default_scheme', 'public') . '://' . 'images';
+    file_prepare_directory($picture_directory, FILE_CREATE_DIRECTORY);
+    $destination = file_stream_wrapper_uri_normalize($picture_directory . '/' . $local['filename']);
+    $file = file_save_data($local[$cover_url], $destination, FILE_EXISTS_RENAME);
+
+    // Save node.
+    $node->field_cover[$node->language][0] = get_object_vars($file);
+    node_save($node);
+  }
 }

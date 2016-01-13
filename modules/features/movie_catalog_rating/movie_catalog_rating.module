@@ -20,10 +20,18 @@ function movie_catalog_rating_preprocess_field(&$variables) {
     $value = $value == '0' ? '' : $value;
 
     // Add stars.
+    $max = 10;
     $variables['items'][0]['#prefix'] = '';
     $stars = &$variables['items'][0]['#prefix'];
-    for ($i=0; $i <intval($value); $i++) {
-      $stars .= '<span class="star"></span>';
+    for ($i=0; $i < $max; $i++) {
+      if ($i < intval($value)) {
+        // Display color star.
+        $stars .= '<span class="star"></span>';
+      }
+      else {
+        // Grey star.
+        $stars .= '<span class="star grey"></span>';
+      }
     }
 
     // Add span.

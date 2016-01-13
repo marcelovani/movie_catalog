@@ -34,115 +34,57 @@ endpoint_route(array(
   'routes' => $routes,
   //'authorize callback' => 'my_module_callback_authorize',
 //  'error callback' => 'my_module_callback_error',
+    'before execute callback' => 'movie_catalog_bootstrap',
 ));
+
+function movie_catalog_bootstrap() {
+  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
+}
 
 function my_module_foo_list() {
   // ...
-  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
 
   $node = node_load(1);
   return array('node' => $node);
 }
 
 function movie_catalog_add_movie() {
-  $data = endpoint_request_data();
-
-  drupal_bootstrap(DRUPAL_BOOTSTRAP_FULL);
-
-  $content_type = 'movies';
+  $movie_data = endpoint_request_data();
+  if (isset($movie_data->imdb_id)) {
+    $imdb_id = check_plain($movie_data->imdb_id);
+  }
+  else {
+    watchdog('error', 'Invalid data passed to end point', array(), WATCHDOG_ALERT);
+    return array('error' => 'Invalid IMDB ID');
+  }
 
   // Check if entry already exists.
   $result = db_select('field_data_field_imdb_id', 'i')
     ->fields('i', array('entity_id'))
-    ->condition('field_imdb_id_value', $data->imdb_id, '=')
+    ->condition('field_imdb_id_value', $imdb_id, '=')
     ->condition('language', LANGUAGE_NONE, '=')
     ->execute()
     ->fetchAssoc();
 
-  if ($result === FALSE) {
-    // Create new node.
-    $node = new stdClass();
-    $node->type = $content_type;
-    node_object_prepare($node);
-  } else {
-    // Update node.
-    $node = node_load($result['entity_id']);
+  if ($result !== FALSE) {
+    $movie_data->entity_id = $result['entity_id'];
+    $op = 'update';
+  }
+  else {
+    $op = 'add';
   }
 
-  $node->title = $data->title;
-  $node->language = LANGUAGE_NONE;
-
-  if (is_array($data->plot)) {
-    $body =  '<p>' . implode('</p>' . PHP_EOL . PHP_EOL . '<p>', $data->plot) . '</p>';
-  } else {
-    $body = $data->plot;
-  }
-  $node->body[$node->language][0]['value']   = $body;
-  $node->body[$node->language][0]['summary'] = text_summary($body);
-  $node->body[$node->language][0]['format']  = 'filtered_html';
-
-  $node->field_imdb_id[$node->language][0]['value'] = $data->imdb_id;
-
-  $node->field_rating[$node->language][0]['value'] = $data->rating;
-
-  // Genres (Autocomplete field)
-  $genres = is_array($data->genres)
-    ? implode(',', $data->genres)
-    : $data->genres;
-
-  // Get field info to figure out which dictionary to use.
-  $field_info = field_info_field('field_genres');
-  $vocab_name = $field_info['settings']['allowed_values'][0]['vocabulary'];
-  $vocabulary = taxonomy_vocabulary_machine_name_load($vocab_name);
-
-  // Translate term names into actual terms.
-  $typed_terms = drupal_explode_tags($genres);
-
-  foreach ($typed_terms as $typed_term) {
-    // See if the term exists in the chosen vocabulary and return the tid;
-    // otherwise, create a new 'autocreate' term for insert/update.
-    if ($possibilities = taxonomy_term_load_multiple(array(), array('name' => trim($typed_term), 'vid' => $vocabulary->vid))) {
-      $term = array_pop($possibilities);
-    }
-    else {
-      $term = array(
-        'tid' => 'autocreate',
-        'vid' => $vocabulary->vid,
-        'name' => $typed_term,
-        'vocabulary_machine_name' => $vocabulary->machine_name,
-      );
-    }
-    $value[] = (array)$term;
-  }
-  $node->field_genres[$node->language] = $value;
-
-
-  //$node->path = array('alias' => $path);
-  // Disable pathauto for this node
-  //$node->path['pathauto'] = '';
-
-  $node->status = 1; //(1 or 0): published or not
-  $node->promote = 0; //(1 or 0): promoted to front page
-  $node->comment = 0; // 0 = comments disabled, 1 = read only, 2 = read/write
-
-  // Term reference (taxonomy) field
-  //$node->field_genres[$node->language][]['tid'] = $form_state['values']['a taxonomy term id'];
-
-  // Entity reference field
-  /*
-  $node->field_customer_nid[$node->language][] = array(
-    'target_id' => $form_state['values']['entity id'],
-    'target_type' => 'node',
+  $queue = DrupalQueue::get('movie_catalog');
+  $queue->createQueue();
+  $queue->createItem(
+    array(
+      'op' => $op,
+      'type' => 'movies',
+      'movie' => $movie_data
+    )
   );
-  */
-  // 'node' is default,
 
-  node_submit($node);
-
-  node_save($node);
-
-  // ...
-  return array('node' => $node);
+  return array('node' => '???');
 }
 
 function my_module_foo_get($id) {

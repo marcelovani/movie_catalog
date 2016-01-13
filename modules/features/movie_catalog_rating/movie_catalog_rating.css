@@ -14,6 +14,10 @@
     -o-transform:      rotate(35deg);
     float: left;
 }
+.star.grey {
+    color: #bdb8bb;
+    border-bottom: 7px solid #bdb8bb;
+}
 .star:before {
     border-bottom: 8px solid #FFCC00;
     border-left: 3px solid transparent;
@@ -31,6 +35,9 @@
     -o-transform:      rotate(-35deg);
 
 }
+.star.grey:before {
+    border-bottom: 8px solid #bdb8bb;
+}
 .star:after {
     position: absolute;
     display: block;
@@ -47,6 +54,10 @@
     -ms-transform:     rotate(-70deg);
     -o-transform:      rotate(-70deg);
     content: '';
+}
+.star.grey:after {
+    color: #bdb8bb;
+    border-bottom: 7px solid #bdb8bb;
 }
 .rating {
     margin-left: 5px;
