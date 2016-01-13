@@ -105,45 +105,6 @@ function movie_catalog_movies_field_default_field_instances() {
     ),
   );
 
-  // Exported field_instance: 'node-movies-field_cover_url'.
-  $field_instances['node-movies-field_cover_url'] = array(
-    'bundle' => 'movies',
-    'default_value' => NULL,
-    'deleted' => 0,
-    'description' => '',
-    'display' => array(
-      'default' => array(
-        'label' => 'hidden',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 5,
-      ),
-      'teaser' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
-    ),
-    'entity_type' => 'node',
-    'field_name' => 'field_cover_url',
-    'label' => 'Cover Url',
-    'required' => 0,
-    'settings' => array(
-      'text_processing' => 0,
-      'user_register_form' => FALSE,
-    ),
-    'widget' => array(
-      'active' => 1,
-      'module' => 'text',
-      'settings' => array(
-        'size' => 60,
-      ),
-      'type' => 'text_textfield',
-      'weight' => 7,
-    ),
-  );
-
   // Exported field_instance: 'node-movies-field_genres'.
   $field_instances['node-movies-field_genres'] = array(
     'bundle' => 'movies',
@@ -277,7 +238,6 @@ function movie_catalog_movies_field_default_field_instances() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Cover');
-  t('Cover Url');
   t('Genres');
   t('IMDB ID');
   t('Plot');

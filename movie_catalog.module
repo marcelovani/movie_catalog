@@ -25,13 +25,28 @@ function movie_catalog_process_queue_item($data) {
         // Create new node.
         $node = new stdClass();
         $node->type = $data['type'];
+        $node->language = LANGUAGE_NONE;
+        $node->status = 1;
+        $node->promote = 0;
+        $node->comment = 0;
+
         node_object_prepare($node);
-        populate_node_data($node, $data);
+        populate_node_data($node, $data['movie']);
+        node_submit($node);
+        node_save($node);
       break;
 
     case 'update':
-        $node = node_load($data['movie']->entity_id);
-        populate_node_data($node, $data);
+        // Update existing node.
+        if (!$node = node_load($data['movie']->entity_id)) {
+          // If for some reason the node is no longer available, re-insert it.
+          $data['op'] = 'add';
+          movie_catalog_process_queue_item($data);
+          return;
+        }
+        populate_node_data($node, $data['movie']);
+        node_submit($node);
+        node_save($node);
       break;
 
     default:
@@ -43,32 +58,38 @@ function movie_catalog_process_queue_item($data) {
   }
 }
 
-function populate_node_data($node, $data) {
+/**
+ * Populate node values.
+ * 
+ * @param $node object
+ * @param $data object 
+ */
+function populate_node_data(&$node, $data) {
 
+  if (isset($data->imdb_id)) {
+    $node->field_imdb_id[$node->language][0]['value'] = check_plain($data->imdb_id);
+  }
 
-  // Populate node values.
-  if (isset($movie_data->title)) {
-    $node->title = check_plain($movie_data->title);
+  if (isset($data->title)) {
+    $node->title = check_plain($data->title);
   }
-  $node->language = LANGUAGE_NONE;
-  if (isset($movie_data->plot)) {
-    $node->body[$node->language][0] = movie_catalog_prepare_field_body($movie_data->plot, 'filtered_html');
+
+  if (isset($data->plot)) {
+    $node->body[$node->language][0] = movie_catalog_prepare_field_body($data->plot, 'filtered_html');
   }
-  $node->field_imdb_id[$node->language][0]['value'] = $imdb_id;
-  if (isset($movie_data->rating)) {
-    $node->field_rating[$node->language][0]['value'] = check_plain($movie_data->rating);
+  
+  if (isset($data->rating)) {
+    $node->field_rating[$node->language][0]['value'] = check_plain($data->rating);
   }
+
   // Genres (Autocomplete field).
-  if (isset($movie_data->genres)) {
-    $node->field_genres[$node->language] = movie_catalog_prepare_term_autocomplete('genres', $movie_data->genres);
+  if (isset($data->genres)) {
+    $node->field_genres[$node->language] = movie_catalog_prepare_term_autocomplete('genres', $data->genres);
   }
-  if (isset($movie_data->cover)) {
-    $node->field_cover_url[$node->language][0]['value'] = check_plain($movie_data->cover);
+
+  if (isset($data->cover)) {
+    $node->field_cover[$node->language][0] = movie_catalog_prepare_remote_image($data->cover, $data->title);
   }
-  //$node->field_cover[$node->language] = movie_catalog_prepare_remote_image($movie_data->cover);
-  $node->status = 1;
-  $node->promote = 0;
-  $node->comment = 0;
 
   // Term reference (taxonomy) field
   //$node->field_genres[$node->language][]['tid'] = $form_state['values']['a taxonomy term id'];
@@ -82,10 +103,8 @@ function populate_node_data($node, $data) {
   */
   // 'node' is default,
 
-  node_submit($node);
-  node_save($node);
-}
 
+}
 
 /**
  * Helper to prepare value for body.
@@ -146,4 +165,37 @@ function movie_catalog_prepare_term_autocomplete($vocab_name, $value) {
   }
 
   return $values;
+}
+
+/**
+ * Helper to save remote images as local files.
+ *
+ * @param $remote_url
+ * @param $local_filename
+ */
+function movie_catalog_prepare_remote_image($remote_url, $local_filename) {
+  $local = array();
+  module_load_include('inc', 'pathauto');
+
+  // Open remote url.
+  $source_info = new SplFileInfo($remote_url);
+  $local_filename = pathauto_cleanstring($local_filename) . '.' . $source_info->getExtension();
+
+  $result = db_select('file_managed', 'f')
+    ->fields('f', array('fid'))
+    ->condition('filename', $local_filename)
+    ->execute();
+
+  if (!$result->fetchCol()) {
+    // Load remote file.
+    $file_contents = file_get_contents($remote_url);
+
+    // Save file.
+    $picture_directory = variable_get('file_default_scheme', 'public') . '://' . 'images';
+    file_prepare_directory($picture_directory, FILE_CREATE_DIRECTORY);
+    $destination = file_stream_wrapper_uri_normalize($picture_directory . '/' . $local_filename);
+    $file = file_save_data($file_contents, $destination, FILE_EXISTS_RENAME);
+
+    return get_object_vars($file);
+  }
 }
