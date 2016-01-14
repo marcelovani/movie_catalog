@@ -10,6 +10,23 @@
 function movie_catalog_navigation_menu_default_menu_links() {
   $menu_links = array();
 
+  // Exported menu link: main-menu_genres:genres.
+  $menu_links['main-menu_genres:genres'] = array(
+    'menu_name' => 'main-menu',
+    'link_path' => 'genres',
+    'router_path' => 'genres',
+    'link_title' => 'Genres',
+    'options' => array(
+      'identifier' => 'main-menu_genres:genres',
+    ),
+    'module' => 'system',
+    'hidden' => 0,
+    'external' => 0,
+    'has_children' => 0,
+    'expanded' => 0,
+    'weight' => -49,
+    'customized' => 1,
+  );
   // Exported menu link: main-menu_movies:movies.
   $menu_links['main-menu_movies:movies'] = array(
     'menu_name' => 'main-menu',
@@ -24,35 +41,35 @@ function movie_catalog_navigation_menu_default_menu_links() {
     'external' => 0,
     'has_children' => 0,
     'expanded' => 0,
-    'weight' => 0,
-    'customized' => 0,
+    'weight' => -50,
+    'customized' => 1,
   );
-  // Exported menu link: management_menus:admin/structure/menu.
-  $menu_links['management_menus:admin/structure/menu'] = array(
-    'menu_name' => 'management',
-    'link_path' => 'admin/structure/menu',
-    'router_path' => 'admin/structure/menu',
-    'link_title' => 'Menus',
+  // Exported menu link: main-menu_search:search.
+  $menu_links['main-menu_search:search'] = array(
+    'menu_name' => 'main-menu',
+    'link_path' => 'search',
+    'router_path' => 'search',
+    'link_title' => 'Search',
     'options' => array(
       'attributes' => array(
-        'title' => 'Add new menus to your site, edit existing menus, and rename and reorganize menu links.',
+        'title' => '',
       ),
-      'identifier' => 'management_menus:admin/structure/menu',
+      'identifier' => 'main-menu_search:search',
     ),
-    'module' => 'system',
+    'module' => 'menu',
     'hidden' => 0,
     'external' => 0,
-    'has_children' => 1,
+    'has_children' => 0,
     'expanded' => 0,
-    'weight' => 0,
-    'customized' => 0,
-    'parent_identifier' => 'management_structure:admin/structure',
+    'weight' => -48,
+    'customized' => 1,
   );
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Menus');
+  t('Genres');
   t('Movies');
+  t('Search');
 
   return $menu_links;
 }
