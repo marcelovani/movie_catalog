@@ -24,6 +24,15 @@ function movie_catalog_movies_field_default_field_instances() {
         'type' => 'text_default',
         'weight' => 3,
       ),
+      'search_results' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(
+          'trim_length' => 600,
+        ),
+        'type' => 'text_summary_or_trimmed',
+        'weight' => 3,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'text',
@@ -67,6 +76,16 @@ function movie_catalog_movies_field_default_field_instances() {
         'settings' => array(
           'image_link' => '',
           'image_style' => 'cover',
+        ),
+        'type' => 'image',
+        'weight' => 0,
+      ),
+      'search_results' => array(
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => 'content',
+          'image_style' => 'thumbnail',
         ),
         'type' => 'image',
         'weight' => 0,
@@ -123,6 +142,13 @@ function movie_catalog_movies_field_default_field_instances() {
         'type' => 'taxonomy_term_reference_link',
         'weight' => 2,
       ),
+      'search_results' => array(
+        'label' => 'hidden',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 2,
+      ),
       'teaser' => array(
         'label' => 'hidden',
         'module' => 'taxonomy',
@@ -162,6 +188,12 @@ function movie_catalog_movies_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
+        'weight' => 4,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 4,
       ),
       'teaser' => array(
@@ -209,6 +241,18 @@ function movie_catalog_movies_field_default_field_instances() {
           'prefix_suffix' => TRUE,
           'scale' => 2,
           'thousand_separator' => ' ',
+        ),
+        'type' => 'number_decimal',
+        'weight' => 1,
+      ),
+      'search_results' => array(
+        'label' => 'hidden',
+        'module' => 'number',
+        'settings' => array(
+          'decimal_separator' => '.',
+          'prefix_suffix' => TRUE,
+          'scale' => 2,
+          'thousand_separator' => '',
         ),
         'type' => 'number_decimal',
         'weight' => 1,

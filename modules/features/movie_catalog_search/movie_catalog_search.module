@@ -5,3 +5,23 @@
  */
 
 include_once 'movie_catalog_search.features.inc';
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function movie_catalog_search_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['search_results'] = array(
+    'label' => t('Search results'),
+    'custom settings' => TRUE,
+  );
+}
+
+/**
+ * Implements hook_preprocess_search_api_page_results().
+ * @param $variables
+ */
+function movie_catalog_search_preprocess_search_api_page_result(&$variables) {
+  $node = $variables['item']->node;
+  $teaser = node_view($node, 'search_results', $node->language);
+  $variables['content'] = render($teaser);
+}

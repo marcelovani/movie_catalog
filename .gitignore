@@ -33,7 +33,7 @@ xmlrpc.php
 /includes
 /misc
 /scripts
-/themes
+themes/contrib
 modules/contrib
 libraries
 
