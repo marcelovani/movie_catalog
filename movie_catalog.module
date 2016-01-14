@@ -22,33 +22,20 @@ function movie_catalog_cron_queue_info() {
 function movie_catalog_process_queue_item($data) {
   switch (strtolower($data['op'])) {
     case 'add':
-      if ($result = movie_catalog_movie_exists($data['movie']->imdb_id)) {
-        // Prevent processing an item that was added twice to the queue.
-        $data['op'] = 'update';
-        movie_catalog_process_queue_item($data);
-        return;
+      if (!$movie = movie_catalog_movie_exists($data['movie']->imdb_id)) {
+        // Create new node.
+        $node = new stdClass();
+        $node->type = $data['type'];
+        $node->language = LANGUAGE_NONE;
+        $node->status = 1;
+        $node->promote = 0;
+        $node->comment = 0;
+
+        node_object_prepare($node);
       }
-      // Create new node.
-      $node = new stdClass();
-      $node->type = $data['type'];
-      $node->language = LANGUAGE_NONE;
-      $node->status = 1;
-      $node->promote = 0;
-      $node->comment = 0;
-
-      node_object_prepare($node);
-      populate_node_data($node, $data['movie']);
-      node_submit($node);
-      node_save($node);
-      break;
-
-    case 'update':
-      // Update existing node.
-      if (!$node = node_load($data['movie']->entity_id)) {
-        // If for some reason the node is no longer available, re-insert it.
-        $data['op'] = 'add';
-        movie_catalog_process_queue_item($data);
-        return;
+      else {
+        // Update node.
+        $node = node_load($movie->entity_id);
       }
 
       // Populate movie data.
@@ -219,3 +206,19 @@ function movie_catalog_prepare_remote_image($remote_url, $local_filename) {
   }
 }
 
+/**
+ * Helper to check if the IMDB id already exists.
+ *
+ * @param $imdb_id
+ * @return mixed
+ */
+function movie_catalog_movie_exists($imdb_id) {
+  $result = db_select('field_data_field_imdb_id', 'i')
+    ->fields('i', array('entity_id'))
+    ->condition('field_imdb_id_value', $imdb_id, '=')
+    ->condition('language', LANGUAGE_NONE, '=')
+    ->execute()
+    ->fetchObject();
+
+  return $result;
+}
