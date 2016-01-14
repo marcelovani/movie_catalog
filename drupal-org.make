@@ -8,9 +8,6 @@ projects[search_api_db][version] = 1.5
 projects[search_api][subdir] = contrib
 projects[search_api][version] = 1.16
 
-projects[search_api_facetapi][subdir] = contrib
-projects[search_api_facetapi][version] = 1.16
-
 projects[search_api_page][subdir] = contrib
 projects[search_api_page][version] = 1.2
 
@@ -83,11 +80,11 @@ projects[tao][type] = theme
 projects[tao][subdir] = contrib
 
 projects[rubik] = 4.3
-projects[tao][type] = theme
+projects[rubik][type] = theme
 projects[rubik][subdir] = contrib
 
 projects[omega] = 4.4
-projects[tao][type] = theme
+projects[omega][type] = theme
 projects[omega][subdir] = contrib
 
 libraries[ckeditor][download][type] = get
