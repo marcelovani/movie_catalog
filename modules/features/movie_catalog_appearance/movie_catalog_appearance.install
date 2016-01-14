@@ -4,5 +4,5 @@ function movie_catalog_appearance_install() {
   theme_enable(array('rubik', 'ohm'));
   variable_set('admin_theme', 'rubik');
   variable_set('node_admin_theme', 1);
-  variable_set('theme_default', 'ohm');
+  variable_set('theme_default', 'movie_catalog');
 }
