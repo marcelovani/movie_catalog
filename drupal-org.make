@@ -1,6 +1,21 @@
 api = 2
 core = 7.x
 
+projects[search_api_db][subdir] = contrib
+projects[search_api_db][version] = 1.5
+
+projects[search_api][subdir] = contrib
+projects[search_api][version] = 1.16
+
+projects[search_api_facetapi][subdir] = contrib
+projects[search_api_facetapi][version] = 1.16
+
+projects[search_api_page][subdir] = contrib
+projects[search_api_page][version] = 1.2
+
+projects[facetapi][subdir] = contrib
+projects[facetapi][version] = 1.5
+
 projects[diff][subdir] = contrib
 projects[diff][version] = 3.2
 

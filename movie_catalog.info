@@ -25,7 +25,7 @@ dependencies[] = file
 dependencies[] = ckeditor
 dependencies[] = diff
 dependencies[] = endpoint
-dependencies[] = context
+dependencies[] = context_ui
 dependencies[] = ctools
 dependencies[] = entity
 dependencies[] = features
@@ -39,6 +39,10 @@ dependencies[] = views_ui
 dependencies[] = libraries
 
 ; Features
+dependencies[] = movie_catalog_movies
 dependencies[] = movie_catalog_editorial
 dependencies[] = movie_catalog_rating
-dependencies[] = movie_catalog_movies
+dependencies[] = movie_catalog_appearance
+dependencies[] = movie_catalog_search
+dependencies[] = movie_catalog_navigation
+dependencies[] = movie_catalog_homepage
