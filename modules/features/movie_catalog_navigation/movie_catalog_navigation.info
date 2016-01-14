@@ -1,0 +1,14 @@
+name = Movie Catalog Navigation
+description = Menu navigation
+core = 7.x
+package = Features
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = features
+dependencies[] = menu
+features[context][] = main_menu
+features[ctools][] = context:context:3
+features[features_api][] = api:2
+features[menu_custom][] = main-menu
+features[menu_custom][] = management
+features[user_permission][] = administer menu

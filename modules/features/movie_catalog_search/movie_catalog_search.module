@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Movie Catalog Search feature.
+ */
+
+include_once 'movie_catalog_search.features.inc';

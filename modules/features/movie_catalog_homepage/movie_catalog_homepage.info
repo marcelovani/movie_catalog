@@ -1,0 +1,10 @@
+name = Movie Catalog Homepage
+description = Home page blocks
+core = 7.x
+package = Features
+dependencies[] = context
+dependencies[] = ctools
+dependencies[] = views
+features[context][] = homepage
+features[ctools][] = context:context:3
+features[features_api][] = api:2
