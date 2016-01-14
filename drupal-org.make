@@ -1,3 +1,4 @@
+; drush make --no-core --no-gitinfofile --working-copy --contrib-destination=. -y drupal-org.make
 api = 2
 core = 7.x
 
@@ -70,17 +71,23 @@ projects[context][version] = 3.6
 projects[feeds][subdir] = contrib
 projects[feeds][version] = 2.0-beta1
 
+projects[module_filter][version] = 2.0
+projects[module_filter][subdir] = contrib
+
 projects[omega_tools][subdir] = contrib
 projects[omega_tools][version] = 3.0-rc4
 projects[omega_tools][type] = module
 
 projects[tao] = 3.1
+projects[tao][type] = theme
 projects[tao][subdir] = contrib
 
 projects[rubik] = 4.3
+projects[tao][type] = theme
 projects[rubik][subdir] = contrib
 
 projects[omega] = 4.4
+projects[tao][type] = theme
 projects[omega][subdir] = contrib
 
 libraries[ckeditor][download][type] = get
