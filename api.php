@@ -57,13 +57,7 @@ function movie_catalog_add_movie() {
     return array('error' => 'Invalid IMDB ID');
   }
 
-  // Check if entry already exists.
-  $result = db_select('field_data_field_imdb_id', 'i')
-    ->fields('i', array('entity_id'))
-    ->condition('field_imdb_id_value', $imdb_id, '=')
-    ->condition('language', LANGUAGE_NONE, '=')
-    ->execute()
-    ->fetchAssoc();
+  $result = movie_catalog_movie_exists($imdb_id);
 
   if ($result !== FALSE) {
     $movie_data->entity_id = $result['entity_id'];
@@ -99,4 +93,21 @@ function my_module_foo_update() {
 function my_module_callback_authorize() {
   return TRUE;
   // ...
+}
+
+/**
+ * Helper to check if the IMDB id already exists.
+ *
+ * @param $imdb_id
+ * @return mixed
+ */
+function movie_catalog_movie_exists($imdb_id) {
+  $result = db_select('field_data_field_imdb_id', 'i')
+    ->fields('i', array('entity_id'))
+    ->condition('field_imdb_id_value', $imdb_id, '=')
+    ->condition('language', LANGUAGE_NONE, '=')
+    ->execute()
+    ->fetchAssoc();
+
+  return $result;
 }

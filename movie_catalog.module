@@ -22,39 +22,40 @@ function movie_catalog_cron_queue_info() {
 function movie_catalog_process_queue_item($data) {
   switch (strtolower($data['op'])) {
     case 'add':
-        if ($node = node_load($data['movie']->entity_id)) {
-          // Prevent processing an item that was added twice to the queue.
-          return;
-        }
-        // Create new node.
-        $node = new stdClass();
-        $node->type = $data['type'];
-        $node->language = LANGUAGE_NONE;
-        $node->status = 1;
-        $node->promote = 0;
-        $node->comment = 0;
+      if ($result = movie_catalog_movie_exists($data['movie']->imdb_id)) {
+        // Prevent processing an item that was added twice to the queue.
+        $data['op'] = 'update';
+        movie_catalog_process_queue_item($data);
+        return;
+      }
+      // Create new node.
+      $node = new stdClass();
+      $node->type = $data['type'];
+      $node->language = LANGUAGE_NONE;
+      $node->status = 1;
+      $node->promote = 0;
+      $node->comment = 0;
 
-        node_object_prepare($node);
-        populate_node_data($node, $data['movie']);
-        node_submit($node);
-        node_save($node);
+      node_object_prepare($node);
+      populate_node_data($node, $data['movie']);
+      node_submit($node);
+      node_save($node);
       break;
 
     case 'update':
-        // Update existing node.
-        if (!$node = node_load($data['movie']->entity_id)) {
-          // If for some reason the node is no longer available, re-insert it.
-          $data['op'] = 'add';
-          movie_catalog_process_queue_item($data);
-          return;
-        }
-        $node_before = $node;
-        populate_node_data($node, $data['movie']);
-        if ($node_before != $node) {
-          // Only re-save if there were changes;
-          node_submit($node);
-          node_save($node);
-        }
+      // Update existing node.
+      if (!$node = node_load($data['movie']->entity_id)) {
+        // If for some reason the node is no longer available, re-insert it.
+        $data['op'] = 'add';
+        movie_catalog_process_queue_item($data);
+        return;
+      }
+
+      // Populate movie data.
+      populate_node_data($node, $data['movie']);
+
+      node_submit($node);
+      node_save($node);
       break;
 
     default:
@@ -68,9 +69,9 @@ function movie_catalog_process_queue_item($data) {
 
 /**
  * Populate node values.
- * 
+ *
  * @param $node object
- * @param $data object 
+ * @param $data object
  */
 function populate_node_data(&$node, $data) {
 
@@ -85,7 +86,7 @@ function populate_node_data(&$node, $data) {
   if (isset($data->plot)) {
     $node->body[$node->language][0] = movie_catalog_prepare_field_body($data->plot, 'filtered_html');
   }
-  
+
   if (isset($data->rating)) {
     $node->field_rating[$node->language][0]['value'] = check_plain($data->rating);
   }
@@ -111,7 +112,6 @@ function populate_node_data(&$node, $data) {
   */
   // 'node' is default,
 
-
 }
 
 /**
@@ -128,7 +128,8 @@ function movie_catalog_prepare_field_body($value, $format_id) {
       $value[$key] = '<p>' . check_markup($item, $format_id) . '</p>';
     }
     $value = implode("\n", $value);
-  } else {
+  }
+  else {
     $value = check_markup($value, $format_id);
   }
 
@@ -158,7 +159,11 @@ function movie_catalog_prepare_term_autocomplete($vocab_name, $value) {
   foreach (drupal_explode_tags($value) as $term_entry) {
     // See if the term exists in the chosen vocabulary and return the tid;
     // otherwise, create a new 'autocreate' term for insert/update.
-    if ($possibilities = taxonomy_term_load_multiple(array(), array('name' => trim($term_entry), 'vid' => $vocabulary->vid))) {
+    if ($possibilities = taxonomy_term_load_multiple(array(), array(
+      'name' => trim($term_entry),
+      'vid' => $vocabulary->vid
+    ))
+    ) {
       $term = array_pop($possibilities);
     }
     else {
@@ -169,7 +174,7 @@ function movie_catalog_prepare_term_autocomplete($vocab_name, $value) {
         'vocabulary_machine_name' => $vocabulary->machine_name,
       );
     }
-    $values[] = (array)$term;
+    $values[] = (array) $term;
   }
 
   return $values;
@@ -213,3 +218,4 @@ function movie_catalog_prepare_remote_image($remote_url, $local_filename) {
     return get_object_vars($file);
   }
 }
+
