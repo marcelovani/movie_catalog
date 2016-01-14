@@ -48,9 +48,13 @@ function movie_catalog_process_queue_item($data) {
           movie_catalog_process_queue_item($data);
           return;
         }
+        $node_before = $node;
         populate_node_data($node, $data['movie']);
-        node_submit($node);
-        node_save($node);
+        if ($node_before != $node) {
+          // Only re-save if there were changes;
+          node_submit($node);
+          node_save($node);
+        }
       break;
 
     default:
