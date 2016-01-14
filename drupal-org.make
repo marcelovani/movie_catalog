@@ -70,13 +70,18 @@ projects[context][version] = 3.6
 projects[feeds][subdir] = contrib
 projects[feeds][version] = 2.0-beta1
 
-projects[tao] = 3.1
-projects[rubik] = 4.3
-projects[omega] = 4.4
-
 projects[omega_tools][subdir] = contrib
 projects[omega_tools][version] = 3.0-rc4
 projects[omega_tools][type] = module
+
+projects[tao] = 3.1
+projects[tao][subdir] = contrib
+
+projects[rubik] = 4.3
+projects[rubik][subdir] = contrib
+
+projects[omega] = 4.4
+projects[omega][subdir] = contrib
 
 libraries[ckeditor][download][type] = get
 libraries[ckeditor][download][url] = http://download.cksource.com/CKEditor/CKEditor/CKEditor%204.5.6/ckeditor_4.5.6_standard.tar.gz

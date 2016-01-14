@@ -37,6 +37,7 @@ dependencies[] = views
 dependencies[] = views_content
 dependencies[] = views_ui
 dependencies[] = libraries
+dependencies[] = omega_tools
 
 ; Features
 dependencies[] = movie_catalog_movies
