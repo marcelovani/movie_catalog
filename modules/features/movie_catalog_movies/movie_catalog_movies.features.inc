@@ -14,6 +14,13 @@ function movie_catalog_movies_ctools_plugin_api($module = NULL, $api = NULL) {
 }
 
 /**
+ * Implements hook_views_api().
+ */
+function movie_catalog_movies_views_api($module = NULL, $api = NULL) {
+  return array("api" => "3.0");
+}
+
+/**
  * Implements hook_image_default_styles().
  */
 function movie_catalog_movies_image_default_styles() {
