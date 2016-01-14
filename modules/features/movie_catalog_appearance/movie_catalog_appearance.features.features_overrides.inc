@@ -12,7 +12,6 @@ function movie_catalog_appearance_features_override_default_overrides() {
   $overrides = array();
 
   // Exported overrides for: variable
-  $overrides["variable.theme_default.value"] = 'movie_catalog';
 
  return $overrides;
 }

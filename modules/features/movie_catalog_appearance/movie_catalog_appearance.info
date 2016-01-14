@@ -4,7 +4,6 @@ core = 7.x
 package = Features
 dependencies[] = ctools
 dependencies[] = features
-dependencies[] = movie_catalog_appearance
 dependencies[] = strongarm
 dependencies[] = system
 features[ctools][] = strongarm:strongarm:1
