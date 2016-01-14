@@ -1,0 +1,9 @@
+name = Movie Catalog
+description = A sub-theme of OHM.
+core = 7.x
+engine = phptemplate
+
+base theme = omega
+
+; This is where you can add all of your custom CSS.
+stylesheets[all][] = ./css/movie_catalog.css
