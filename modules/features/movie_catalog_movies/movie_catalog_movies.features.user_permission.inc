@@ -31,6 +31,13 @@ function movie_catalog_movies_user_default_permissions() {
     'module' => 'node',
   );
 
+  // Exported permission: 'delete terms in countries'.
+  $permissions['delete terms in countries'] = array(
+    'name' => 'delete terms in countries',
+    'roles' => array(),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'delete terms in genres'.
   $permissions['delete terms in genres'] = array(
     'name' => 'delete terms in genres',
@@ -50,6 +57,13 @@ function movie_catalog_movies_user_default_permissions() {
     'name' => 'edit own movies content',
     'roles' => array(),
     'module' => 'node',
+  );
+
+  // Exported permission: 'edit terms in countries'.
+  $permissions['edit terms in countries'] = array(
+    'name' => 'edit terms in countries',
+    'roles' => array(),
+    'module' => 'taxonomy',
   );
 
   // Exported permission: 'edit terms in genres'.

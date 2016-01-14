@@ -37,6 +37,9 @@ function movie_catalog_movies_strongarm() {
       'token' => array(
         'custom_settings' => FALSE,
       ),
+      'search_results' => array(
+        'custom_settings' => TRUE,
+      ),
     ),
     'extra_fields' => array(
       'form' => array(
@@ -44,7 +47,7 @@ function movie_catalog_movies_strongarm() {
           'weight' => '0',
         ),
         'path' => array(
-          'weight' => '5',
+          'weight' => '7',
         ),
       ),
       'display' => array(),

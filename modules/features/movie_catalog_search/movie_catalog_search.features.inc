@@ -104,6 +104,12 @@ function movie_catalog_search_default_search_api_server() {
             "table" : "search_api_db_index_text",
             "type" : "list\\u003Ctext\\u003E",
             "boost" : "1.0"
+          },
+          "node:field_countries" : {
+            "table" : "search_api_db_index_node_field_countries",
+            "column" : "value",
+            "type" : "list\\u003Cinteger\\u003E",
+            "boost" : "1.0"
           }
         }
       }

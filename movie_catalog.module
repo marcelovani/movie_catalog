@@ -83,6 +83,11 @@ function populate_node_data(&$node, $data) {
     $node->field_genres[$node->language] = movie_catalog_prepare_term_autocomplete('genres', $data->genres);
   }
 
+  // Countries (Autocomplete field).
+  if (isset($data->countries)) {
+    $node->field_countries[$node->language] = movie_catalog_prepare_term_autocomplete('countries', $data->countries);
+  }
+
   if (isset($data->cover)) {
     $node->field_cover[$node->language][0] = movie_catalog_prepare_remote_image($data->cover, $data->title);
   }
