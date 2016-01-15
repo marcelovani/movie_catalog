@@ -67,7 +67,7 @@ function populate_node_data(&$node, $data) {
   }
 
   if (isset($data->title)) {
-    $node->title = check_plain($data->title);
+    $node->title = htmlspecialchars_decode(check_plain($data->title));
   }
 
   if (isset($data->plot)) {
