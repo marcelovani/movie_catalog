@@ -30,6 +30,7 @@ features[facetapi][] = search_api@index:block:taxonomy_term
 features[facetapi][] = search_api@index:block:taxonomy_term:name
 features[facetapi][] = search_api@index:block:taxonomy_vocabulary
 features[features_api][] = api:2
+features[search_api_index][] = index
 features[search_api_page][] = search
 features[search_api_server][] = db_search
 features[user_permission][] = access search search_api_page

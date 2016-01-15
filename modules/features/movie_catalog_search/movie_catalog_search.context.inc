@@ -44,9 +44,9 @@ function movie_catalog_search_context_default_contexts() {
           'region' => 'sidebar_second',
           'weight' => '-8',
         ),
-        'facetapi-bYGXB1ccyI6wJCGqNExOdeiQfFEcdnHy' => array(
+        'facetapi-8tHGhOF79DyajH5n7OSXY3aSnbxinWUG' => array(
           'module' => 'facetapi',
-          'delta' => 'bYGXB1ccyI6wJCGqNExOdeiQfFEcdnHy',
+          'delta' => '8tHGhOF79DyajH5n7OSXY3aSnbxinWUG',
           'region' => 'sidebar_second',
           'weight' => '-7',
         ),

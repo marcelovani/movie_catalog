@@ -21,7 +21,13 @@ function movie_catalog_search_entity_info_alter(&$entity_info) {
  * @param $variables
  */
 function movie_catalog_search_preprocess_search_api_page_result(&$variables) {
-  $node = $variables['item']->node;
-  $teaser = node_view($node, 'search_results', $node->language);
-  $variables['content'] = render($teaser);
+  if (isset($variables['item']->node)) {
+    $node = $variables['item']->node;
+    $teaser = node_view($node, 'search_results', $node->language);
+    $variables['content'] = render($teaser);
+  }
+  else {
+    drupal_set_message(t('Invalid item type on search results: !item', array('!item' => $variables['item']->item_type)));
+    $variables['content'] = '';
+  }
 }
