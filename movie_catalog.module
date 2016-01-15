@@ -88,6 +88,30 @@ function populate_node_data(&$node, $data) {
     $node->field_countries[$node->language] = movie_catalog_prepare_term_autocomplete('countries', $data->countries);
   }
 
+  // Directors (Autocomplete field).
+  if (isset($data->directors)) {
+    unset($node->field_directors[$node->language]);
+    $directors = array_combine($data->directors->ids, $data->directors->names);
+    foreach ($directors as $imdb_id => $name) {
+      if ($person = movie_catalog_person_exists($imdb_id)) {
+        $node->field_directors[$node->language][]['tid'] = $person->entity_id;
+      }
+      else {
+        // Create new term.
+        $vocabulary = taxonomy_vocabulary_machine_name_load('directors');
+        $term = new stdClass();
+        $term->name = $name;
+        $term->vid = $vocabulary->vid;
+        $term->field_person_imdb_id[$node->language][]['value'] = $imdb_id;
+        taxonomy_term_save($term);
+        // Assign to the node.
+        $node->field_directors[$node->language][]['tid'] = $term->tid;
+      }
+    }
+
+    //$node->field_directors[$node->language] = movie_catalog_prepare_term_autocomplete('directors', $data->directors);
+  }
+
   if (isset($data->cover)) {
     $node->field_cover[$node->language][0] = movie_catalog_prepare_remote_image($data->cover, $data->title);
   }
@@ -221,6 +245,23 @@ function movie_catalog_movie_exists($imdb_id) {
   $result = db_select('field_data_field_imdb_id', 'i')
     ->fields('i', array('entity_id'))
     ->condition('field_imdb_id_value', $imdb_id, '=')
+    ->condition('language', LANGUAGE_NONE, '=')
+    ->execute()
+    ->fetchObject();
+
+  return $result;
+}
+
+/**
+ * Helper to check if the Person IMDB id already exists.
+ *
+ * @param $imdb_id
+ * @return mixed
+ */
+function movie_catalog_person_exists($imdb_id) {
+  $result = db_select('field_data_field_person_imdb_id', 'i')
+    ->fields('i', array('entity_id'))
+    ->condition('field_person_imdb_id_value', $imdb_id, '=')
     ->condition('language', LANGUAGE_NONE, '=')
     ->execute()
     ->fetchObject();

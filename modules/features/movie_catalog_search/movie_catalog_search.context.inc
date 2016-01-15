@@ -44,11 +44,17 @@ function movie_catalog_search_context_default_contexts() {
           'region' => 'sidebar_second',
           'weight' => '-8',
         ),
+        'facetapi-bYGXB1ccyI6wJCGqNExOdeiQfFEcdnHy' => array(
+          'module' => 'facetapi',
+          'delta' => 'bYGXB1ccyI6wJCGqNExOdeiQfFEcdnHy',
+          'region' => 'sidebar_second',
+          'weight' => '-7',
+        ),
         'facetapi-oD0TtvfCljUvBaiu7fQCIlWMPSHUsotl' => array(
           'module' => 'facetapi',
           'delta' => 'oD0TtvfCljUvBaiu7fQCIlWMPSHUsotl',
           'region' => 'sidebar_second',
-          'weight' => '-7',
+          'weight' => '-6',
         ),
       ),
     ),

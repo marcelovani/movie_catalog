@@ -17,6 +17,14 @@ function movie_catalog_movies_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
+    'directors' => array(
+      'name' => 'Directors',
+      'machine_name' => 'directors',
+      'description' => '',
+      'hierarchy' => 0,
+      'module' => 'taxonomy',
+      'weight' => 0,
+    ),
     'genres' => array(
       'name' => 'Genres',
       'machine_name' => 'genres',

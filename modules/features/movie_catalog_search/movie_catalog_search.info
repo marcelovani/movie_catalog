@@ -19,6 +19,7 @@ features[ctools][] = strongarm:strongarm:1
 features[facetapi][] = search_api@index::node
 features[facetapi][] = search_api@index:block:node
 features[facetapi][] = search_api@index:block:node:field_countries
+features[facetapi][] = search_api@index:block:node:field_directors
 features[facetapi][] = search_api@index:block:node:field_genres
 features[facetapi][] = search_api@index:block:node:field_genres:name
 features[facetapi][] = search_api@index:block:node:field_rating

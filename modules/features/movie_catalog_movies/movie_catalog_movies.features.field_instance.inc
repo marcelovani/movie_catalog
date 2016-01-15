@@ -22,7 +22,7 @@ function movie_catalog_movies_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 4,
+        'weight' => 5,
       ),
       'search_results' => array(
         'label' => 'hidden',
@@ -60,7 +60,7 @@ function movie_catalog_movies_field_default_field_instances() {
         'summary_rows' => 5,
       ),
       'type' => 'text_textarea_with_summary',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -76,7 +76,7 @@ function movie_catalog_movies_field_default_field_instances() {
         'module' => 'taxonomy',
         'settings' => array(),
         'type' => 'taxonomy_term_reference_link',
-        'weight' => 3,
+        'weight' => 4,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -106,7 +106,7 @@ function movie_catalog_movies_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'taxonomy_autocomplete',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -174,6 +174,52 @@ function movie_catalog_movies_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-movies-field_directors'.
+  $field_instances['node-movies-field_directors'] = array(
+    'bundle' => 'movies',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'taxonomy',
+        'settings' => array(),
+        'type' => 'taxonomy_term_reference_link',
+        'weight' => 3,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_directors',
+    'label' => 'Directors',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 0,
+      'module' => 'taxonomy',
+      'settings' => array(
+        'autocomplete_path' => 'taxonomy/autocomplete',
+        'size' => 60,
+      ),
+      'type' => 'taxonomy_autocomplete',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance: 'node-movies-field_genres'.
   $field_instances['node-movies-field_genres'] = array(
     'bundle' => 'movies',
@@ -234,7 +280,7 @@ function movie_catalog_movies_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 5,
+        'weight' => 6,
       ),
       'search_results' => array(
         'label' => 'above',
@@ -264,7 +310,7 @@ function movie_catalog_movies_field_default_field_instances() {
         'size' => 10,
       ),
       'type' => 'text_textfield',
-      'weight' => 6,
+      'weight' => 7,
     ),
   );
 
@@ -332,7 +378,40 @@ function movie_catalog_movies_field_default_field_instances() {
       'module' => 'number',
       'settings' => array(),
       'type' => 'number',
-      'weight' => 5,
+      'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'taxonomy_term-directors-field_person_imdb_id'.
+  $field_instances['taxonomy_term-directors-field_person_imdb_id'] = array(
+    'bundle' => 'directors',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'taxonomy_term',
+    'field_name' => 'field_person_imdb_id',
+    'label' => 'IMDB ID',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 1,
     ),
   );
 
@@ -340,6 +419,7 @@ function movie_catalog_movies_field_default_field_instances() {
   // Included for use with string extractors like potx.
   t('Countries');
   t('Cover');
+  t('Directors');
   t('Genres');
   t('IMDB ID');
   t('Plot');

@@ -110,6 +110,12 @@ function movie_catalog_search_default_search_api_server() {
             "column" : "value",
             "type" : "list\\u003Cinteger\\u003E",
             "boost" : "1.0"
+          },
+          "node:field_directors" : {
+            "table" : "search_api_db_index_node_field_directors",
+            "column" : "value",
+            "type" : "list\\u003Cinteger\\u003E",
+            "boost" : "1.0"
           }
         }
       }
