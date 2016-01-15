@@ -95,9 +95,12 @@ function populate_node_data(&$node, $data) {
       if ($person = movie_catalog_person_exists($imdb_id)) {
         $node->field_directors[$node->language][]['tid'] = $person->entity_id;
         $term = taxonomy_term_load($person->entity_id);
-        //if (!in_array($term->field_person_roles[$node->language][]['value']['director'])) {
-        // @todo update people term and append type i.e. director.
-        //}
+        // Check it cast is already a director for this person.
+        if (!_movie_catalog_array_search('director', $term->field_person_roles[$node->language])) {
+          // Update term and add director.
+          $term->field_person_roles[$node->language][]['value'] = 'director';
+          taxonomy_term_save($term);
+        }
       }
       else {
         // Create new term.
@@ -123,9 +126,12 @@ function populate_node_data(&$node, $data) {
       if ($person = movie_catalog_person_exists($imdb_id)) {
         $node->field_cast[$node->language][]['tid'] = $person->entity_id;
         $term = taxonomy_term_load($person->entity_id);
-        //if (!in_array($term->field_person_roles[$node->language][]['value']['cast'])) {
-        // @todo update people term and append type i.e. cast.
-        //}
+        // Check it cast is already a role for this person.
+        if (!_movie_catalog_array_search('cast', $term->field_person_roles[$node->language])) {
+          // Update term and add cast.
+          $term->field_person_roles[$node->language][]['value'] = 'cast';
+          taxonomy_term_save($term);
+        }
       }
       else {
         // Create new term.
@@ -236,7 +242,6 @@ function movie_catalog_prepare_term_autocomplete($vocab_name, $value) {
  * @param $local_filename
  */
 function movie_catalog_prepare_remote_image($remote_url, $local_filename) {
-  $local = array();
   module_load_include('inc', 'pathauto');
 
   // Open remote url.
@@ -300,4 +305,20 @@ function movie_catalog_person_exists($imdb_id) {
     ->fetchObject();
 
   return $result;
+}
+
+/**
+ * Helper to search on multi-value term.
+ *
+ * @param $search
+ * @param $array
+ * @return bool
+ */
+function _movie_catalog_array_search($search, $array) {
+  foreach ($array as $key => $item) {
+    if ($item['value'] == $search) {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
