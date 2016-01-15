@@ -17,17 +17,17 @@ function movie_catalog_movies_taxonomy_default_vocabularies() {
       'module' => 'taxonomy',
       'weight' => 0,
     ),
-    'directors' => array(
-      'name' => 'Directors',
-      'machine_name' => 'directors',
+    'genres' => array(
+      'name' => 'Genres',
+      'machine_name' => 'genres',
       'description' => '',
       'hierarchy' => 0,
       'module' => 'taxonomy',
       'weight' => 0,
     ),
-    'genres' => array(
-      'name' => 'Genres',
-      'machine_name' => 'genres',
+    'people' => array(
+      'name' => 'People',
+      'machine_name' => 'people',
       'description' => '',
       'hierarchy' => 0,
       'module' => 'taxonomy',

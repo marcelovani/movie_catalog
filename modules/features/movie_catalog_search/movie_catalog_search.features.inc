@@ -29,7 +29,7 @@ function movie_catalog_search_default_search_api_page() {
     "path" : "search",
     "name" : "Search",
     "machine_name" : "search",
-    "description" : null,
+    "description" : "",
     "options" : {
       "mode" : "terms",
       "fields" : {
@@ -37,10 +37,11 @@ function movie_catalog_search_default_search_api_page() {
         "node:title" : "node:title",
         "taxonomy_term:name" : "taxonomy_term:name"
       },
-      "per_page" : "10",
-      "get_per_page" : 0,
+      "per_page" : "20",
       "result_page_search_form" : 1,
-      "view_mode" : "search_api_page_result"
+      "get_per_page" : 1,
+      "view_mode" : "search_api_page_result",
+      "empty_behavior" : ""
     },
     "enabled" : "1"
   }');
@@ -111,8 +112,8 @@ function movie_catalog_search_default_search_api_server() {
             "type" : "list\\u003Cinteger\\u003E",
             "boost" : "1.0"
           },
-          "node:field_directors" : {
-            "table" : "search_api_db_index_node_field_directors",
+          "node:field_cast" : {
+            "table" : "search_api_db_index_node_field_cast",
             "column" : "value",
             "type" : "list\\u003Cinteger\\u003E",
             "boost" : "1.0"
