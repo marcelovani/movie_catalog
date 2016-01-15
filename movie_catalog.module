@@ -61,7 +61,6 @@ function movie_catalog_process_queue_item($data) {
  * @param $data object
  */
 function populate_node_data(&$node, $data) {
-
   if (isset($data->imdb_id)) {
     $node->field_imdb_id[$node->language][0]['value'] = check_plain($data->imdb_id);
   }
@@ -95,21 +94,55 @@ function populate_node_data(&$node, $data) {
     foreach ($directors as $imdb_id => $name) {
       if ($person = movie_catalog_person_exists($imdb_id)) {
         $node->field_directors[$node->language][]['tid'] = $person->entity_id;
+        $term = taxonomy_term_load($person->entity_id);
+        //if (!in_array($term->field_person_roles[$node->language][]['value']['director'])) {
+        // @todo update people term and append type i.e. director.
+        //}
       }
       else {
         // Create new term.
-        $vocabulary = taxonomy_vocabulary_machine_name_load('directors');
+        $vocabulary = taxonomy_vocabulary_machine_name_load('people');
         $term = new stdClass();
         $term->name = $name;
         $term->vid = $vocabulary->vid;
         $term->field_person_imdb_id[$node->language][]['value'] = $imdb_id;
+        $term->field_person_roles[$node->language][]['value'] = 'director';
         taxonomy_term_save($term);
         // Assign to the node.
         $node->field_directors[$node->language][]['tid'] = $term->tid;
       }
     }
-
     //$node->field_directors[$node->language] = movie_catalog_prepare_term_autocomplete('directors', $data->directors);
+  }
+
+  // Cast (Autocomplete field).
+  if (isset($data->cast)) {
+    unset($node->field_cast[$node->language]);
+    $cast = array_combine($data->cast->ids, $data->cast->names);
+    foreach ($cast as $imdb_id => $name) {
+      if ($person = movie_catalog_person_exists($imdb_id)) {
+        $node->field_cast[$node->language][]['tid'] = $person->entity_id;
+        $term = taxonomy_term_load($person->entity_id);
+        //if (!in_array($term->field_person_roles[$node->language][]['value']['cast'])) {
+        // @todo update people term and append type i.e. cast.
+        //}
+      }
+      else {
+        // Create new term.
+        $vocabulary = taxonomy_vocabulary_machine_name_load('people');
+        $term = new stdClass();
+        $term->name = $name;
+        $term->vid = $vocabulary->vid;
+        $term->field_person_imdb_id[$node->language][]['value'] = $imdb_id;
+        $term->field_person_roles[$node->language][]['value'] = 'cast';
+        taxonomy_term_save($term);
+        // Assign to the node.
+        $node->field_cast[$node->language][]['tid'] = $term->tid;
+      }
+    }
+    debug($node->field_cast);
+
+    //$node->field_cast[$node->language] = movie_catalog_prepare_term_autocomplete('cast', $data->cast);
   }
 
   if (isset($data->cover)) {
