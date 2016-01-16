@@ -46,5 +46,46 @@ function movie_catalog_movies_context_default_contexts() {
   t('Movies');
   $export['genres'] = $context;
 
+  $context = new stdClass();
+  $context->disabled = FALSE; /* Edit this to true to make a default context disabled initially */
+  $context->api_version = 3;
+  $context->name = 'people';
+  $context->description = 'List of Directos and cast';
+  $context->tag = 'Movies';
+  $context->conditions = array(
+    'path' => array(
+      'values' => array(
+        '~admin/*' => '~admin/*',
+        '~node/add/*' => '~node/add/*',
+        '~search/*' => '~search/*',
+      ),
+    ),
+  );
+  $context->reactions = array(
+    'block' => array(
+      'blocks' => array(
+        'views-people-cast' => array(
+          'module' => 'views',
+          'delta' => 'people-cast',
+          'region' => 'sidebar_second',
+          'weight' => '-16',
+        ),
+        'views-people-directors' => array(
+          'module' => 'views',
+          'delta' => 'people-directors',
+          'region' => 'sidebar_second',
+          'weight' => '-15',
+        ),
+      ),
+    ),
+  );
+  $context->condition_mode = 0;
+
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('List of Directos and cast');
+  t('Movies');
+  $export['people'] = $context;
+
   return $export;
 }
