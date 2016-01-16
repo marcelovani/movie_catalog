@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Movie Catalog Content Manager feature.
+ */
+
+include_once 'movie_catalog_content_manager.features.inc';

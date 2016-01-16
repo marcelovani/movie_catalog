@@ -71,6 +71,9 @@ projects[feeds][version] = 2.0-beta1
 projects[module_filter][version] = 2.0
 projects[module_filter][subdir] = contrib
 
+projects[views_bulk_operations][version] = 3.3
+projects[views_bulk_operations][subdir] = contrib
+
 projects[omega_tools][subdir] = contrib
 projects[omega_tools][version] = 3.0-rc4
 projects[omega_tools][type] = module
