@@ -266,6 +266,51 @@ function movie_catalog_movies_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-movies-field_folder'.
+  $field_instances['node-movies-field_folder'] = array(
+    'bundle' => 'movies',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'The folder where the film is stored',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 8,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_folder',
+    'label' => 'Folder',
+    'required' => 0,
+    'settings' => array(
+      'text_processing' => 0,
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'text',
+      'settings' => array(
+        'size' => 60,
+      ),
+      'type' => 'text_textfield',
+      'weight' => 11,
+    ),
+  );
+
   // Exported field_instance: 'node-movies-field_genres'.
   $field_instances['node-movies-field_genres'] = array(
     'bundle' => 'movies',
@@ -360,6 +405,49 @@ function movie_catalog_movies_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'node-movies-field_owned'.
+  $field_instances['node-movies-field_owned'] = array(
+    'bundle' => 'movies',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 9,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_owned',
+    'label' => 'Owned',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 12,
+    ),
+  );
+
   // Exported field_instance: 'node-movies-field_rating'.
   $field_instances['node-movies-field_rating'] = array(
     'bundle' => 'movies',
@@ -425,6 +513,49 @@ function movie_catalog_movies_field_default_field_instances() {
       'settings' => array(),
       'type' => 'number',
       'weight' => 6,
+    ),
+  );
+
+  // Exported field_instance: 'node-movies-field_seen'.
+  $field_instances['node-movies-field_seen'] = array(
+    'bundle' => 'movies',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'module' => 'list',
+        'settings' => array(),
+        'type' => 'list_default',
+        'weight' => 10,
+      ),
+      'search_results' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+      'teaser' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'node',
+    'field_name' => 'field_seen',
+    'label' => 'Seen',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 13,
     ),
   );
 
@@ -499,11 +630,15 @@ function movie_catalog_movies_field_default_field_instances() {
   t('Countries');
   t('Cover');
   t('Directors');
+  t('Folder');
   t('Genres');
   t('IMDB ID');
+  t('Owned');
   t('Plot');
   t('Rating');
   t('Roles');
+  t('Seen');
+  t('The folder where the film is stored');
 
   return $field_instances;
 }

@@ -65,6 +65,14 @@ function populate_node_data(&$node, $data) {
     $node->field_imdb_id[$node->language][0]['value'] = check_plain($data->imdb_id);
   }
 
+  if (isset($data->owned)) {
+    $node->field_owned[$node->language][0]['value'] = check_plain($data->owned);
+  }
+
+  if (isset($data->folder)) {
+    $node->field_folder[$node->language][0]['value'] = check_plain($data->folder);
+  }
+
   if (isset($data->title)) {
     $node->title = htmlspecialchars_decode(check_plain($data->title));
   }
