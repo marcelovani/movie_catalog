@@ -95,6 +95,10 @@ function populate_node_data(&$node, $data) {
     $node->field_cast[$node->language] = movie_catalog_prepare_person('cast', $data->cast, $node->language);
   }
 
+  if (isset($data->writer)) {
+    $node->field_writer[$node->language] = movie_catalog_prepare_person('writer', $data->writer, $node->language);
+  }
+
   if (isset($data->cover)) {
     $node->field_cover[$node->language][0] = movie_catalog_prepare_remote_image($data->cover, $data->title);
   }
@@ -267,7 +271,7 @@ function movie_catalog_prepare_person($role, $data_directors, $language) {
     if ($person = movie_catalog_person_exists($imdb_id)) {
       $field_value[]['tid'] = $person->entity_id;
       $term = taxonomy_term_load($person->entity_id);
-      // Check it cast is already a director for this person.
+      // Check it role is already a director for this person.
       if (!_movie_catalog_array_search($role, $term->field_person_roles[$language])) {
         // Update term and add director.
         $term->field_person_roles[$language][]['value'] = $role;
