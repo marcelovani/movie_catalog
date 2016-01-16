@@ -22,6 +22,7 @@ function movie_catalog_movies_context_default_contexts() {
         '~admin/*' => '~admin/*',
         '~node/add/*' => '~node/add/*',
         '~search/*' => '~search/*',
+        '~genres/*' => '~genres/*',
       ),
     ),
   );

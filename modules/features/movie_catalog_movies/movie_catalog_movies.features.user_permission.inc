@@ -45,6 +45,13 @@ function movie_catalog_movies_user_default_permissions() {
     'module' => 'taxonomy',
   );
 
+  // Exported permission: 'delete terms in people'.
+  $permissions['delete terms in people'] = array(
+    'name' => 'delete terms in people',
+    'roles' => array(),
+    'module' => 'taxonomy',
+  );
+
   // Exported permission: 'edit any movies content'.
   $permissions['edit any movies content'] = array(
     'name' => 'edit any movies content',
@@ -69,6 +76,13 @@ function movie_catalog_movies_user_default_permissions() {
   // Exported permission: 'edit terms in genres'.
   $permissions['edit terms in genres'] = array(
     'name' => 'edit terms in genres',
+    'roles' => array(),
+    'module' => 'taxonomy',
+  );
+
+  // Exported permission: 'edit terms in people'.
+  $permissions['edit terms in people'] = array(
+    'name' => 'edit terms in people',
     'roles' => array(),
     'module' => 'taxonomy',
   );

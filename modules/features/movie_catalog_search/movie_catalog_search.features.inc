@@ -38,9 +38,10 @@ function movie_catalog_search_default_search_api_index() {
         "node" : { "type" : "integer", "entity_type" : "node" },
         "node:field_cast" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
         "node:field_countries" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
+        "node:field_directors" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
         "node:field_genres" : { "type" : "list\\u003Cinteger\\u003E", "entity_type" : "taxonomy_term" },
         "node:field_genres:name" : { "type" : "list\\u003Ctext\\u003E" },
-        "node:field_rating" : { "type" : "decimal" },
+        "node:field_rating" : { "type" : "integer" },
         "node:title" : { "type" : "text" },
         "search_api_language" : { "type" : "string" },
         "taxonomy_term" : { "type" : "integer", "entity_type" : "taxonomy_term" },
@@ -67,6 +68,7 @@ function movie_catalog_search_default_search_api_index() {
               "node:field_genres" : true,
               "node:field_rating" : true,
               "node:field_countries" : true,
+              "node:field_directors" : true,
               "node:field_cast" : true
             }
           }
@@ -148,11 +150,11 @@ function movie_catalog_search_default_search_api_server() {
   $items['db_search'] = entity_import('search_api_server', '{
     "name" : "db search",
     "machine_name" : "db_search",
-    "description" : "aaa",
+    "description" : "",
     "class" : "search_api_db_service",
     "options" : {
       "database" : "default:default",
-      "min_chars" : "3",
+      "min_chars" : "1",
       "partial_matches" : 1,
       "indexes" : { "index" : {
           "node" : {
@@ -189,7 +191,7 @@ function movie_catalog_search_default_search_api_server() {
           "node:field_rating" : {
             "table" : "search_api_db_index",
             "column" : "node_field_rating",
-            "type" : "decimal",
+            "type" : "integer",
             "boost" : "1.0"
           },
           "taxonomy_term:name" : { "table" : "search_api_db_index_text", "type" : "text", "boost" : "1.0" },
@@ -206,6 +208,12 @@ function movie_catalog_search_default_search_api_server() {
           },
           "node:field_cast" : {
             "table" : "search_api_db_index_node_field_cast",
+            "column" : "value",
+            "type" : "list\\u003Cinteger\\u003E",
+            "boost" : "1.0"
+          },
+          "node:field_directors" : {
+            "table" : "search_api_db_index_node_field_directors",
             "column" : "value",
             "type" : "list\\u003Cinteger\\u003E",
             "boost" : "1.0"
