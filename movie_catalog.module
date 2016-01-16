@@ -87,74 +87,19 @@ function populate_node_data(&$node, $data) {
     $node->field_countries[$node->language] = movie_catalog_prepare_term_autocomplete('countries', $data->countries);
   }
 
-  // Directors (Autocomplete field).
   if (isset($data->directors)) {
-    unset($node->field_directors[$node->language]);
-    $directors = array_combine($data->directors->ids, $data->directors->names);
-    foreach ($directors as $imdb_id => $name) {
-      if ($person = movie_catalog_person_exists($imdb_id)) {
-        $node->field_directors[$node->language][]['tid'] = $person->entity_id;
-        $term = taxonomy_term_load($person->entity_id);
-        // Check it cast is already a director for this person.
-        if (!_movie_catalog_array_search('director', $term->field_person_roles[$node->language])) {
-          // Update term and add director.
-          $term->field_person_roles[$node->language][]['value'] = 'director';
-          taxonomy_term_save($term);
-        }
-      }
-      else {
-        // Create new term.
-        $vocabulary = taxonomy_vocabulary_machine_name_load('people');
-        $term = new stdClass();
-        $term->name = $name;
-        $term->vid = $vocabulary->vid;
-        $term->field_person_imdb_id[$node->language][]['value'] = $imdb_id;
-        $term->field_person_roles[$node->language][]['value'] = 'director';
-        taxonomy_term_save($term);
-        // Assign to the node.
-        $node->field_directors[$node->language][]['tid'] = $term->tid;
-      }
-    }
-    //$node->field_directors[$node->language] = movie_catalog_prepare_term_autocomplete('directors', $data->directors);
+    $node->field_directors[$node->language] = movie_catalog_prepare_person('director', $data->directors, $node->language);
   }
 
-  // Cast (Autocomplete field).
   if (isset($data->cast)) {
-    unset($node->field_cast[$node->language]);
-    $cast = array_combine($data->cast->ids, $data->cast->names);
-    foreach ($cast as $imdb_id => $name) {
-      if ($person = movie_catalog_person_exists($imdb_id)) {
-        $node->field_cast[$node->language][]['tid'] = $person->entity_id;
-        $term = taxonomy_term_load($person->entity_id);
-        // Check it cast is already a role for this person.
-        if (!_movie_catalog_array_search('cast', $term->field_person_roles[$node->language])) {
-          // Update term and add cast.
-          $term->field_person_roles[$node->language][]['value'] = 'cast';
-          taxonomy_term_save($term);
-        }
-      }
-      else {
-        // Create new term.
-        $vocabulary = taxonomy_vocabulary_machine_name_load('people');
-        $term = new stdClass();
-        $term->name = $name;
-        $term->vid = $vocabulary->vid;
-        $term->field_person_imdb_id[$node->language][]['value'] = $imdb_id;
-        $term->field_person_roles[$node->language][]['value'] = 'cast';
-        taxonomy_term_save($term);
-        // Assign to the node.
-        $node->field_cast[$node->language][]['tid'] = $term->tid;
-      }
-    }
-    debug($node->field_cast);
-
-    //$node->field_cast[$node->language] = movie_catalog_prepare_term_autocomplete('cast', $data->cast);
+    $node->field_cast[$node->language] = movie_catalog_prepare_person('cast', $data->cast, $node->language);
   }
 
   if (isset($data->cover)) {
     $node->field_cover[$node->language][0] = movie_catalog_prepare_remote_image($data->cover, $data->title);
   }
 
+  //debug($node);
   // Term reference (taxonomy) field
   //$node->field_genres[$node->language][]['tid'] = $form_state['values']['a taxonomy term id'];
 
@@ -305,6 +250,45 @@ function movie_catalog_person_exists($imdb_id) {
     ->fetchObject();
 
   return $result;
+}
+
+/**
+ * Helper to prepare person.
+ *
+ * @param $role
+ * @param $data_directors
+ * @param $language
+ * @return array
+ */
+function movie_catalog_prepare_person($role, $data_directors, $language) {
+  $directors = array_combine($data_directors->ids, $data_directors->names);
+  $field_value = array();
+  foreach ($directors as $imdb_id => $name) {
+    if ($person = movie_catalog_person_exists($imdb_id)) {
+      $field_value[]['tid'] = $person->entity_id;
+      $term = taxonomy_term_load($person->entity_id);
+      // Check it cast is already a director for this person.
+      if (!_movie_catalog_array_search($role, $term->field_person_roles[$language])) {
+        // Update term and add director.
+        $term->field_person_roles[$language][]['value'] = $role;
+        taxonomy_term_save($term);
+      }
+    }
+    else {
+      // Create new term.
+      $vocabulary = taxonomy_vocabulary_machine_name_load('people');
+      $term = new stdClass();
+      $term->name = $name;
+      $term->vid = $vocabulary->vid;
+      $term->field_person_imdb_id[$language][]['value'] = $imdb_id;
+      $term->field_person_roles[$language][]['value'] = $role;
+      taxonomy_term_save($term);
+      // Assign to the node.
+      $field_value[]['tid'] = $term->tid;
+    }
+  }
+
+  return $field_value;
 }
 
 /**
