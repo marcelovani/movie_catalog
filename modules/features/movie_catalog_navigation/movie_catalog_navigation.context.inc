@@ -31,7 +31,7 @@ function movie_catalog_navigation_context_default_contexts() {
         'system-main-menu' => array(
           'module' => 'system',
           'delta' => 'main-menu',
-          'region' => 'navigation',
+          'region' => 'header',
           'weight' => '-10',
         ),
       ),

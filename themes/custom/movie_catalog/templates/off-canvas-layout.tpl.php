@@ -21,13 +21,14 @@
     </div>
 
     <?php print render($page['header']); ?>
+    <?php print render($page['navigation']); ?>
 
     <div id="off-canvas" class="l-off-canvas">
       <a id="off-canvas-show" href="#off-canvas" class="l-off-canvas-show"><?php print t('Show Navigation'); ?></a>
       <a id="off-canvas-hide" href="#" class="l-off-canvas-hide"><?php print t('Hide Navigation'); ?></a>
-      <?php print render($page['navigation']); ?>
     </div>
   </header>
+
 
   <div class="l-main">
     <div class="l-content" role="main">

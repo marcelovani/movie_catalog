@@ -18,3 +18,8 @@ regions[footer]         = Footer
 
 ; This is where you can add all of your custom CSS.
 stylesheets[all][] = ./css/movie_catalog.css
+
+; Settings
+settings[toggle_logo] = 1
+settings[default_logo] = 0
+settings[logo_path] = 'image/Logo.png'

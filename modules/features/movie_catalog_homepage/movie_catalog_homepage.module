@@ -5,3 +5,18 @@
  */
 
 include_once 'movie_catalog_homepage.features.inc';
+
+function movie_catalog_homepage_menu() {
+  return
+    array(
+      'home' => array(
+        'title' => '',
+        'page callback' => 'movie_catalog_homepage_page',
+        'access callback' => TRUE,
+      )
+    );
+}
+
+function movie_catalog_homepage_page() {
+  return '';
+}
