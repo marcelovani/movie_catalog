@@ -1,9 +1,20 @@
 name = Movie Catalog
-description = A sub-theme of OHM.
+description = A sub-theme of Omega.
 core = 7.x
 engine = phptemplate
 
 base theme = omega
+
+; Regions
+regions[branding]       = Branding
+regions[header]         = Header
+regions[navigation]     = Navigation
+regions[highlighted]    = Highlighted
+regions[help]           = Help
+regions[content]        = Content
+regions[sidebar_first]  = First Sidebar
+regions[sidebar_second] = Second Sidebar
+regions[footer]         = Footer
 
 ; This is where you can add all of your custom CSS.
 stylesheets[all][] = ./css/movie_catalog.css

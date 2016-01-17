@@ -1,7 +1,7 @@
 body {
     background-color: rgb(52, 52, 52);
 }
-text, p, li, label {
+div, span, text, p, li, label, .field__label {
     color: white;
 }
 p {
@@ -56,4 +56,59 @@ h3, h3 a {
 
 .node-readmore {
     float: right;
+}
+.view-genres h2 {
+    font-variant: normal;
+    font-size: 2pt;
+    font-style: italic;
+    font-weight: 100;
+    padding: 1px;
+}
+.pager {
+    clear: both;
+    display: block;
+}
+.pager .pager-previous,
+.pager .pager-next {
+    padding: 5px;
+    /* border: 1px solid; */
+    font-weight: bolder;
+}
+.pager .pager-current {
+    line-height: 29px;
+}
+.block {
+    clear: both;
+    padding-top: 22px;
+}
+.block h2 {
+    margin: 2px 0 0 0;
+}
+.pager li {
+    float: left;
+    display: block;
+}
+#block-system-main-menu ul {
+    clear: both;
+}
+#block-system-main-menu li {
+    list-style-type: none;
+}
+#block-system-main-menu li a {
+    font-size: 22px;
+}
+
+.field--name-field-cover img {
+    border-top: 1px solid rgb(234, 230, 230);
+    border-left: 1px solid rgb(228, 228, 228);
+    border-right: 1px solid rgb(166, 166, 166);
+    border-bottom: 1px solid rgb(166, 166, 166);
+}
+
+.field--name-field-cast .field__item {
+    float: none;
+}
+.field--name-field-countries .field__item {
+    float: left;
+    margin: 2px 11px 1px 0px;
 }
