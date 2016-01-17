@@ -22,6 +22,7 @@ dependencies[] = field_ui
 dependencies[] = file
 
 ; Contrib
+dependencies[] = admin_menu
 dependencies[] = ckeditor
 dependencies[] = diff
 dependencies[] = endpoint
@@ -42,6 +43,7 @@ dependencies[] = field_group
 dependencies[] = views_bulk_operations
 
 ; Features
+dependencies[] = movie_catalog
 dependencies[] = movie_catalog_movies
 dependencies[] = movie_catalog_content_manager
 dependencies[] = movie_catalog_editorial
