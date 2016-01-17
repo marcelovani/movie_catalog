@@ -5,3 +5,13 @@
  */
 
 include_once 'movie_catalog_movies.features.inc';
+
+/**
+ * Implements hook_entity_info_alter().
+ */
+function movie_catalog_movies_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['compact'] = array(
+    'label' => t('Compact'),
+    'custom settings' => TRUE,
+  );
+}

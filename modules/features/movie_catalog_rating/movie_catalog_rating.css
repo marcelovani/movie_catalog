@@ -61,4 +61,12 @@
 }
 .rating {
     margin-left: 5px;
+    /* border: 1px solid; */
+    padding-top: 2px;
+    display: inline;
+    float: left;
+    font-weight: bolder;
+    font-size: 20px;
+    padding-left: 2px;
+    color: rgb(255, 223, 0);
 }

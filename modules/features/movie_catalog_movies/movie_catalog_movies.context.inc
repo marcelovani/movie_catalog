@@ -21,7 +21,6 @@ function movie_catalog_movies_context_default_contexts() {
       'values' => array(
         '~admin/*' => '~admin/*',
         '~node/add/*' => '~node/add/*',
-        '~search/*' => '~search/*',
         '~genres/*' => '~genres/*',
       ),
     ),
@@ -32,7 +31,7 @@ function movie_catalog_movies_context_default_contexts() {
         'views-genres-genres' => array(
           'module' => 'views',
           'delta' => 'genres-genres',
-          'region' => 'sidebar_second',
+          'region' => 'sidebar_first',
           'weight' => '-10',
         ),
       ),
@@ -57,7 +56,6 @@ function movie_catalog_movies_context_default_contexts() {
       'values' => array(
         '~admin/*' => '~admin/*',
         '~node/add/*' => '~node/add/*',
-        '~search/*' => '~search/*',
       ),
     ),
   );
@@ -67,13 +65,13 @@ function movie_catalog_movies_context_default_contexts() {
         'views-people-cast' => array(
           'module' => 'views',
           'delta' => 'people-cast',
-          'region' => 'sidebar_second',
+          'region' => 'sidebar_first',
           'weight' => '-16',
         ),
         'views-people-directors' => array(
           'module' => 'views',
           'delta' => 'people-directors',
-          'region' => 'sidebar_second',
+          'region' => 'sidebar_first',
           'weight' => '-15',
         ),
       ),

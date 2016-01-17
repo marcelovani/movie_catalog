@@ -11,6 +11,7 @@ include_once 'movie_catalog_rating.features.inc';
  * @param $variables
  */
 function movie_catalog_rating_preprocess_field(&$variables) {
+
   $element = $variables['element'];
   if ($element['#field_name'] == 'field_rating') {
     $value = &$variables['items'][0]['#markup'];
@@ -20,11 +21,18 @@ function movie_catalog_rating_preprocess_field(&$variables) {
     $value = $value == '0' ? '' : $value;
 
     // Add stars.
-    $max = 10;
+    if ($element['#view_mode'] == 'full') {
+      $max = 10;
+      $count = intval($value);
+    }
+    else {
+      $max = 5;
+      $count = intval($value / 3);
+    }
     $variables['items'][0]['#prefix'] = '';
     $stars = &$variables['items'][0]['#prefix'];
     for ($i=0; $i < $max; $i++) {
-      if ($i < intval($value)) {
+      if ($i < $count) {
         // Display color star.
         $stars .= '<span class="star"></span>';
       }
@@ -35,7 +43,7 @@ function movie_catalog_rating_preprocess_field(&$variables) {
     }
 
     // Add span.
-    $value = '<span class="rating">' . $value . '</span>';
+    $value = '<span class="rating">' . number_format($value, 1) . '</span>';
   }
 }
 

@@ -38,6 +38,7 @@ dependencies[] = views_content
 dependencies[] = views_ui
 dependencies[] = libraries
 dependencies[] = omega_tools
+dependencies[] = field_group
 dependencies[] = views_bulk_operations
 
 ; Features

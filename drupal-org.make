@@ -14,6 +14,9 @@ projects[search_api_page][version] = 1.2
 projects[facetapi][subdir] = contrib
 projects[facetapi][version] = 1.5
 
+projects[field_group][subdir] = contrib
+projects[field_group][version] = 1.5
+
 projects[diff][subdir] = contrib
 projects[diff][version] = 3.2
 
