@@ -21,7 +21,6 @@ function movie_catalog_movies_context_default_contexts() {
       'values' => array(
         '~admin/*' => '~admin/*',
         '~node/add/*' => '~node/add/*',
-        '~genres/*' => '~genres/*',
       ),
     ),
   );

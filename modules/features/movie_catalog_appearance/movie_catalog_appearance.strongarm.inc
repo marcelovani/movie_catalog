@@ -37,7 +37,7 @@ function movie_catalog_appearance_strongarm() {
   $strongarm->name = 'theme_movie_catalog_settings';
   $strongarm->value = array(
     'toggle_logo' => 1,
-    'toggle_name' => 1,
+    'toggle_name' => 0,
     'toggle_slogan' => 0,
     'toggle_node_user_picture' => 1,
     'toggle_comment_user_picture' => 1,
@@ -66,13 +66,15 @@ function movie_catalog_appearance_strongarm() {
     'omega_livereload_port' => '35729',
     'omega_demo_regions' => 0,
     'omega_demo_regions_list' => array(
-      'sidebar_first' => 'sidebar_first',
-      'sidebar_second' => 'sidebar_second',
-      'content' => 'content',
       'header' => 'header',
-      'footer' => 'footer',
       'highlighted' => 'highlighted',
       'help' => 'help',
+      'content' => 'content',
+      'sidebar_first' => 'sidebar_first',
+      'sidebar_second' => 'sidebar_second',
+      'footer' => 'footer',
+      'branding' => 0,
+      'navigation' => 0,
     ),
     'omega_toggle_extension_compatibility' => 1,
     'omega_conditional_classes_html' => 1,
@@ -110,7 +112,6 @@ function movie_catalog_appearance_strongarm() {
         'variant' => '_default',
       ),
     ),
-    'ohm_enable_warning' => 1,
   );
   $export['theme_movie_catalog_settings'] = $strongarm;
 
