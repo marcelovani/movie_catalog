@@ -47,3 +47,8 @@ Using it
 
   4 - You can try if the configuration of 3 and 4 works by visiting your site domain /api/imdb/movie/add
   You should get this response: {"result":{"result":"It Works!"}}
+
+  5 - Run the script to scan your movies' folder and fetch IMDB data. On IMDB movie scanner folder run
+  $ ./scan.py
+
+  6 - Once the proccess in 5 has finished, go to your Drupal site and run cron. This will import all movies.
