@@ -52,7 +52,7 @@ function movie_catalog_search_default_search_api_index() {
         "search_api_alter_bundle_filter" : {
           "status" : 0,
           "weight" : "-10",
-          "settings" : { "default" : "1", "bundles" : [] }
+          "settings" : { "default" : "0", "bundles" : { "node:movies" : "node:movies" } }
         },
         "search_api_alter_add_hierarchy" : { "status" : 0, "weight" : "0", "settings" : { "fields" : [] } },
         "search_api_alter_add_url" : { "status" : 0, "weight" : "0", "settings" : [] },
@@ -131,11 +131,11 @@ function movie_catalog_search_default_search_api_page() {
     "options" : {
       "mode" : "terms",
       "fields" : { "node:title" : "node:title" },
-      "per_page" : "20",
-      "result_page_search_form" : 1,
+      "per_page" : "30",
+      "result_page_search_form" : 0,
       "get_per_page" : 1,
       "view_mode" : "search_api_page_result",
-      "empty_behavior" : ""
+      "empty_behavior" : "results"
     },
     "enabled" : "1"
   }');

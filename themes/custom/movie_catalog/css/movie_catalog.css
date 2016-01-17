@@ -73,6 +73,12 @@ h3, h3 a {
     font-size: 12px;
 }
 
+/* drupal */
+.messages--status, tr.ok {
+    background-color: #394A26;
+}
+
+
 /* fields */
 .field {
     clear: left;
@@ -210,9 +216,12 @@ h3, h3 a {
     padding: 0;
 }
 
+#block-views-movies-homepage.block {
+    background: none;
+}
+
 .view-display-id-homepage .views-row {
     width: 163px;
-
     margin-right: 5px;
 }
 
@@ -227,6 +236,24 @@ ol.search-results {
 }
 .node--movies.node--teaser .node__content .group-right {
     max-width: 270px;
+}
+#block-search-api-page-search {
+    height: 59px;
+    margin: 2px;
+    padding: 1px 11px 6px 14px;
+}
+#block-search-api-page-search h2 {
+    display: none;
+}
+#block-search-api-page-search .form-item-keys-1 input {
+    width: 70%;
+    height: 26px;
+    float: left;
+}
+#block-search-api-page-search .form-submit {
+    float: left;
+    right: 1px;
+    margin-left: 10px;
 }
 
 /* fields */

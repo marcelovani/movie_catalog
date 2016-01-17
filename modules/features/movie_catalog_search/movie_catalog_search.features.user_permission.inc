@@ -13,14 +13,18 @@ function movie_catalog_search_user_default_permissions() {
   // Exported permission: 'access search search_api_page'.
   $permissions['access search search_api_page'] = array(
     'name' => 'access search search_api_page',
-    'roles' => array(),
+    'roles' => array(
+      'anonymous user' => 'anonymous user',
+    ),
     'module' => 'search_api_page',
   );
 
   // Exported permission: 'access search_api_page'.
   $permissions['access search_api_page'] = array(
     'name' => 'access search_api_page',
-    'roles' => array(),
+    'roles' => array(
+      'anonymous user' => 'anonymous user',
+    ),
     'module' => 'search_api_page',
   );
 
