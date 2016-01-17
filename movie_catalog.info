@@ -50,6 +50,5 @@ dependencies[] = movie_catalog_editorial
 dependencies[] = movie_catalog_rating
 dependencies[] = movie_catalog_appearance
 dependencies[] = movie_catalog_search
-dependencies[] = movie_catalog_navigation
 dependencies[] = movie_catalog_homepage
 dependencies[] = movie_catalog_seo
