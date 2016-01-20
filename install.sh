@@ -24,3 +24,6 @@ done
 
 # cd sites/default
 # drush si -y movie_catalog --db-url="mysql://root@localhost/movie_catalog" --site-name="Movie Catalog" --account-name=admin --account-pass=password --sites-subdir=default
+echo "[Info] Installation finished."
+echo
+echo Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile

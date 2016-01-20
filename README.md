@@ -33,14 +33,20 @@ Installation
   6 - Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile
 
 
-Using it
+IMDB script
+===========
+A Python script that scans your folders and uses the file names to grab movie metadata
+from IMDB website. It sends the information to an end point in the drupal site, which
+adds to a queue that is processed next time cron runs.
 
-  You can add movies manually. If you want to import your local movies using
-  IMDB database, follow these steps:
+  To install the script, follow these steps:
 
-  1 - Checkout https://github.com/marcelovani/IMDB-movie-scanner and follow instructions from README.md
+  1 - Checkout https://github.com/marcelovani/IMDB-movie-scanner and
+    follow instructions from README.md
 
-  2 - Edit .htaccess on the Drupal core folder file and paste
+  2 - Make sure that these lines are present on the .htaccess file in the drupal core folder. These lines
+    get added automatically by the install script.
+
 		# Rewrite API callback URLs of the form api.php?q=x.
 		RewriteCond %{REQUEST_URI} ^\/([a-z]{2}\/)?api\/.*
 		RewriteRule ^(.*)$ api.php?q=$1 [L,QSA]
@@ -49,6 +55,7 @@ Using it
 
   3 - Make sure you have a symlink on Drupal core folder to api.php inside profiles/movie_catalog
   i.e. Run this from the Drupal core folder: ln -s profiles/movie_catalog/api.php
+  This symlink should be automatically created by the install script.
 
   4 - You can try if the configuration of 3 and 4 works by visiting your site domain /api/imdb/movie/add
   You should get this response: {"result":{"result":"It Works!"}}
