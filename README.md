@@ -7,11 +7,14 @@ Also, provides an end point to accept requests that update the catalog.
 
 
 Prerequisites
+=============
 
-Git
-Drush
+- Git
+- Drush
+
 
 Installation
+============
 
   1 - Create a database and configure your vhost as usual
 
@@ -24,9 +27,11 @@ Installation
   4 - Go inside the folder
   $ cd movie_catalog
 
-  5 - Run install i.e.
+  5 - Run the install script specifying the folder where you want the site to be created i.e.
   $ sh ./install.sh /Users/marcelo/Sites/movie_catalog
-  Alternatively, perform a manual Drupal installation, selecting Movie Catalog profile
+
+  6 - Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile
+
 
 Using it
 
