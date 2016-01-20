@@ -25,7 +25,7 @@ Installation
   $ cd movie_catalog
 
   5 - Run install i.e.
-  $ ./install.sh /Users/marcelo/Sites/movie_catalog
+  $ sh ./install.sh /Users/marcelo/Sites/movie_catalog
   Alternatively, perform a manual Drupal installation, selecting Movie Catalog profile
 
 Using it

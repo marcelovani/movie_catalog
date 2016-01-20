@@ -8,6 +8,6 @@ git clone --branch 7.x-1.x https://git.drupal.org/project/movie_catalog.git movi
 
 echo "[Info] Bootstrap has finished installation."
 echo
-echo To install Distro run
+echo To install the Drupal profile do the following:
 echo $ cd movie_catalog
-echo $ ./install.sh
+echo $ sh ./install.sh
