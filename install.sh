@@ -8,13 +8,16 @@ echo "[INFO] Installing profile"
 drush make --prepare-install build-movie_catalog.make ${INSTALL_DIR}
 
 cd ${INSTALL_DIR}
+
 # Creating a symlink to the api.
+rm api.php -f
 ln -s profiles/movie_catalog/api.php api.php
 
 # Adding Rewrite API callback URLs of the form api.php?q=x.
 for file in .htaccess; do
-    sed 's/RewriteBase \/$/RewriteBase \/\n\nRewriteCond %{REQUEST_URI} ^\\\/([a-z]{2}\\\/)?api\\\/.*\r\nRewriteRule ^(.*)$ api.php?q=$1 [L,QSA]\r\nRewriteCond %{QUERY_STRING} \(^|\&\)q=(\\\/)?(\\\/)?api\\\/.*\nRewriteRule .* api.php [L]\n/g' > $file.new
-    rm $file.old
+    rm $file.new -f
+    rm $file.old -f
+    sed 's/RewriteBase \/$/RewriteBase \/\n\nRewriteCond %{REQUEST_URI} ^\\\/([a-z]{2}\\\/)?api\\\/.*\r\nRewriteRule ^(.*)$ api.php?q=$1 [L,QSA]\r\nRewriteCond %{QUERY_STRING} \(^|\&\)q=(\\\/)?(\\\/)?api\\\/.*\nRewriteRule .* api.php [L]\n/g' $file > $file.new
     mv $file $file.old
     mv $file.new $file
 done
