@@ -169,6 +169,8 @@ h3, h3 a {
     border-left: 1px solid rgb(228, 228, 228);
     border-right: 1px solid rgb(166, 166, 166);
     border-bottom: 1px solid rgb(166, 166, 166);
+    width: 150px;
+    height: 220px;
 }
 
 .field--name-field-cover,
@@ -204,14 +206,15 @@ h3, h3 a {
 }
 .node--movies.node--compact .node__content {
     float: left;
-    width: 170px;
     display: block;
     /* border: 1px solid; */
+    width: 150px;
+    height: 220px;
+    margin-bottom: 25px;
 }
 .node--movies.node--compact .node__content .field {
     margin: 0 auto;
     clear: both;
-    width: 220px;
     float: none;
     padding: 0;
 }
