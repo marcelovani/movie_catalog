@@ -43,7 +43,7 @@ function movie_catalog_rating_preprocess_field(&$variables) {
     }
 
     // Add span.
-    $value = '<span class="rating">' . number_format($value, 1) . '</span>';
+    $value = '<span class="rating">' . number_format(floatval($value), 1) . '</span>';
   }
 }
 
