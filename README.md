@@ -7,11 +7,14 @@ Also, provides an end point to accept requests that update the catalog.
 
 
 Prerequisites
+=============
 
-Git
-Drush
+- Git
+- Drush
+
 
 Installation
+============
 
   1 - Create a database and configure your vhost as usual
 
@@ -19,23 +22,31 @@ Installation
   $ cd /tmp
 
   3 - Copy and paste this into your shell to install everything:
-  $ curl -L -s http://goo.gl/UmWrmz | bash
+  $ curl -L -s http://goo.gl/Ur6uex | bash
 
   4 - Go inside the folder
   $ cd movie_catalog
 
-  5 - Run install i.e.
-  $ ./install.sh /Users/marcelo/Sites/movie_catalog
-  Alternatively, perform a manual Drupal installation, selecting Movie Catalog profile
+  5 - Run the install script specifying the folder where you want the site to be created i.e.
+  $ sh ./install.sh /Users/marcelo/Sites/movie_catalog
 
-Using it
+  6 - Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile
 
-  You can add movies manually. If you want to import your local movies using
-  IMDB database, follow these steps:
 
-  1 - Checkout https://github.com/marcelovani/IMDB-movie-scanner and follow instructions from README.md
+IMDB script
+===========
+A Python script that scans your folders and uses the file names to grab movie metadata
+from IMDB website. It sends the information to an end point in the drupal site, which
+adds to a queue that is processed next time cron runs.
 
-  2 - Edit .htaccess on the Drupal core folder file and paste
+  To install the script, follow these steps:
+
+  1 - Checkout https://github.com/marcelovani/IMDB-movie-scanner and
+    follow instructions from README.md
+
+  2 - Make sure that these lines are present on the .htaccess file in the drupal core folder. These lines
+    get added automatically by the install script.
+
 		# Rewrite API callback URLs of the form api.php?q=x.
 		RewriteCond %{REQUEST_URI} ^\/([a-z]{2}\/)?api\/.*
 		RewriteRule ^(.*)$ api.php?q=$1 [L,QSA]
@@ -44,6 +55,7 @@ Using it
 
   3 - Make sure you have a symlink on Drupal core folder to api.php inside profiles/movie_catalog
   i.e. Run this from the Drupal core folder: ln -s profiles/movie_catalog/api.php
+  This symlink should be automatically created by the install script.
 
   4 - You can try if the configuration of 3 and 4 works by visiting your site domain /api/imdb/movie/add
   You should get this response: {"result":{"result":"It Works!"}}
