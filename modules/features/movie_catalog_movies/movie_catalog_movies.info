@@ -61,6 +61,7 @@ features[node][] = movies
 features[taxonomy][] = countries
 features[taxonomy][] = genres
 features[taxonomy][] = people
+features[user_permission][] = access content
 features[user_permission][] = create movies content
 features[user_permission][] = delete any movies content
 features[user_permission][] = delete own movies content

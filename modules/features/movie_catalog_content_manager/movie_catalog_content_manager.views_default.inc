@@ -83,28 +83,28 @@ function movie_catalog_content_manager_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['vbo_operations'] = array(
     'action::views_bulk_operations_delete_item' => array(
       'selected' => 1,
-      'postpone_processing' => 1,
+      'postpone_processing' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
     'action::node_make_sticky_action' => array(
       'selected' => 1,
-      'postpone_processing' => 1,
+      'postpone_processing' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
     'action::node_make_unsticky_action' => array(
       'selected' => 1,
-      'postpone_processing' => 1,
+      'postpone_processing' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
     'action::views_bulk_operations_modify_action' => array(
       'selected' => 1,
-      'postpone_processing' => 1,
+      'postpone_processing' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',

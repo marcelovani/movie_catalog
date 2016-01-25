@@ -70,7 +70,7 @@ function movie_catalog_appearance_strongarm() {
     'omega_toggle_extension_layouts' => 1,
     'omega_layout' => 'off-canvas',
     'omega_toggle_extension_development' => 1,
-    'omega_enable_export_reminder' => 1,
+    'omega_enable_export_reminder' => 0,
     'omega_rebuild_theme_registry' => 0,
     'omega_rebuild_aggregates' => 0,
     'omega_browser_width_indicator' => 0,
