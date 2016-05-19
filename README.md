@@ -46,9 +46,9 @@ adds to a queue that is processed next time cron runs.
 
   1 - Checkout https://github.com/marcelovani/IMDB-movie-scanner and
     follow instructions from README.md
+  $ git clone https://github.com/marcelovani/IMDB-movie-scanner
 
-  2 - Make sure that these lines are present on the .htaccess file in the drupal core folder. These lines
-    get added automatically by the install script.
+  2 - Make sure that these lines are present on the .htaccess file in the drupal core folder.
 
 		# Rewrite API callback URLs of the form api.php?q=x.
 		RewriteCond %{REQUEST_URI} ^\/([a-z]{2}\/)?api\/.*
@@ -60,7 +60,7 @@ adds to a queue that is processed next time cron runs.
   i.e. Run this from the Drupal core folder: ln -s profiles/movie_catalog/api.php
   This symlink should be automatically created by the install script.
 
-  4 - You can try if the configuration of 3 and 4 works by visiting your site domain /api/imdb/movie/add
+  4 - You can try if the configuration of 2 and 3 works by visiting your site domain /api/imdb/movie/add
   You should get this response: {"result":{"result":"It Works!"}}
 
   5 - Run the script to scan your movies' folder and fetch IMDB data. On IMDB movie scanner folder run

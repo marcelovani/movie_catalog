@@ -17,24 +17,30 @@ fi
 ln -s profiles/movie_catalog/api.php api.php
 
 # Adding Rewrite API callback URLs of the form api.php?q=x.
-for file in .htaccess; do
-    if [ -e "$file.new" ]
-    then
-      rm -f $file.new
-    fi
-
-    if [ -e "$file.old" ]
-    then
-      rm -f $file.old
-    fi
-
-    sed 's/RewriteBase \/$/RewriteBase \/\n\nRewriteCond %{REQUEST_URI} ^\\\/([a-z]{2}\\\/)?api\\\/.*\r\nRewriteRule ^(.*)$ api.php?q=$1 [L,QSA]\r\nRewriteCond %{QUERY_STRING} \(^|\&\)q=(\\\/)?(\\\/)?api\\\/.*\nRewriteRule .* api.php [L]\n/g' $file > $file.new
-    mv $file $file.old
-    mv $file.new $file
-done
+#for file in .htaccess; do
+#    if [ -e "$file.new" ]
+#    then
+#      rm -f $file.new
+#    fi
+#
+#    if [ -e "$file.old" ]
+#    then
+#      rm -f $file.old
+#    fi
+#
+#    sed 's/RewriteBase \/$/RewriteBase \/\n\nRewriteCond %{REQUEST_URI} ^\\\/([a-z]{2}\\\/)?api\\\/.*\r\nRewriteRule ^(.*)$ api.php?q=$1 [L,QSA]\r\nRewriteCond %{QUERY_STRING} \(^|\&\)q=(\\\/)?(\\\/)?api\\\/.*\nRewriteRule .* api.php [L]\n/g' $file > $file.new
+#    mv $file $file.old
+#    mv $file.new $file
+#done
 
 # cd sites/default
 # drush si -y movie_catalog --db-url="mysql://root@localhost/movie_catalog" --site-name="Movie Catalog" --account-name=admin --account-pass=password --sites-subdir=default
 echo "[Info] Installation finished."
 echo
 echo Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile
+echo
+echo To use the IMDB script, add these lines to the .htaccess file on the Drupal root, just below RewriteBase \
+echo RewriteCond %{REQUEST_URI} ^\/([a-z]{2}\/)?api\/.*
+echo RewriteRule ^(.*)$ api.php?q=$1 [L,QSA]
+echo RewriteCond %{QUERY_STRING} (^|&)q=(\/)?(\/)?api\/.*
+echo RewriteRule .* api.php [L]
