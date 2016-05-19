@@ -318,3 +318,14 @@ function _movie_catalog_array_search($search, $array) {
   }
   return FALSE;
 }
+
+/**
+ * Callback for hook_install_tasks().
+ */
+function _movie_catalog_set_theme() {
+  // Set the default and admin themes
+  theme_enable(array("seven"));
+  variable_set("theme_default", "movie_catalog");
+  variable_set("admin_theme", "rubik");
+  variable_set("node_admin_theme", '1');
+}

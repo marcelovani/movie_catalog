@@ -10,13 +10,24 @@ drush make --prepare-install build-movie_catalog.make ${INSTALL_DIR}
 cd ${INSTALL_DIR}
 
 # Creating a symlink to the api.
-rm api.php -f
+if [ -e "api.php" ]
+then
+  rm -f api.php
+fi
 ln -s profiles/movie_catalog/api.php api.php
 
 # Adding Rewrite API callback URLs of the form api.php?q=x.
 for file in .htaccess; do
-    rm $file.new -f
-    rm $file.old -f
+    if [ -e "$file.new" ]
+    then
+      rm -f $file.new
+    fi
+
+    if [ -e "$file.old" ]
+    then
+      rm -f $file.old
+    fi
+
     sed 's/RewriteBase \/$/RewriteBase \/\n\nRewriteCond %{REQUEST_URI} ^\\\/([a-z]{2}\\\/)?api\\\/.*\r\nRewriteRule ^(.*)$ api.php?q=$1 [L,QSA]\r\nRewriteCond %{QUERY_STRING} \(^|\&\)q=(\\\/)?(\\\/)?api\\\/.*\nRewriteRule .* api.php [L]\n/g' $file > $file.new
     mv $file $file.old
     mv $file.new $file

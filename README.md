@@ -11,12 +11,12 @@ Prerequisites
 
 - Git
 - Drush
+- Setting up virtual host (MAMP or Acquia DevDesktop are handy)
 
 
 Installation
 ============
-
-  1 - Create a database and configure your vhost as usual
+  1 - Open terminal
 
   2 - Go to a temporary folder
   $ cd /tmp
@@ -32,6 +32,9 @@ Installation
 
   6 - Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile
 
+  7 - Create a database and configure your vhost pointing to the folder specified in 5
+
+  8 - Visit the site url and run the installation choosing Movie Catalog profile
 
 IMDB script
 ===========
