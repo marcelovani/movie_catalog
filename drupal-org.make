@@ -3,7 +3,7 @@ api = 2
 core = 7.x
 
 projects[search_api_db][subdir] = contrib
-projects[search_api_db][version] = 1.15
+projects[search_api_db][version] = 1.5
 
 projects[search_api][subdir] = contrib
 projects[search_api][version] = 1.18
