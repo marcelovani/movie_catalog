@@ -40,7 +40,7 @@ echo
 echo Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile
 echo
 echo To use the IMDB script, add these lines to the .htaccess file on the Drupal root, just below RewriteBase \
-echo RewriteCond %{REQUEST_URI} ^\/([a-z]{2}\/)?api\/.*
-echo RewriteRule ^(.*)$ api.php?q=$1 [L,QSA]
-echo RewriteCond %{QUERY_STRING} (^|&)q=(\/)?(\/)?api\/.*
-echo RewriteRule .* api.php [L]
+echo "RewriteCond %{REQUEST_URI} ^\/([a-z]{2}\/)?api\/.*"
+echo "RewriteRule ^(.*)$ api.php?q=$1 [L,QSA]"
+echo "RewriteCond %{QUERY_STRING} (^|&)q=(\/)?(\/)?api\/.*"
+echo "RewriteRule .* api.php [L]"
