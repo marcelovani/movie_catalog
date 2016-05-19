@@ -3,7 +3,7 @@ api = 2
 core = 7.x
 
 projects[search_api_db][subdir] = contrib
-projects[search_api_db][version] = 1.5
+projects[search_api_db][version] = 1.18
 
 projects[search_api][subdir] = contrib
 projects[search_api][version] = 1.16
@@ -33,10 +33,10 @@ projects[ctools][subdir] = contrib
 projects[ctools][version] = 1.9
 
 projects[entity][subdir] = contrib
-projects[entity][version] = 1.6
+projects[entity][version] = 1.7
 
 projects[features][subdir] = contrib
-projects[features][version] = 2.7
+projects[features][version] = 2.10
 
 projects[features_override][subdir] = contrib
 projects[features_override][version] = 2.0-rc3
@@ -60,13 +60,13 @@ projects[link][subdir] = contrib
 projects[link][version] = 1.3
 
 projects[libraries][subdir] = contrib
-projects[libraries][version] = 2.2
+projects[libraries][version] = 2.3
 
 projects[field_collection][subdir] = contrib
 projects[field_collection][version] = 1.0-beta10
 
 projects[context][subdir] = contrib
-projects[context][version] = 3.6
+projects[context][version] = 3.7
 
 projects[feeds][subdir] = contrib
 projects[feeds][version] = 2.0-beta1
