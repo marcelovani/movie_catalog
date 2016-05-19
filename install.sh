@@ -7,6 +7,11 @@ INSTALL_DIR=$1
 echo "[INFO] Installing profile"
 drush make --prepare-install build-movie_catalog.make ${INSTALL_DIR}
 
+if [ ! -e ${INSTALL_DIR} ]
+then
+  echo [Error] There was an error installing Drupal
+  exit
+fi
 cd ${INSTALL_DIR}
 
 # Creating a symlink to the api.
@@ -36,11 +41,8 @@ ln -s profiles/movie_catalog/api.php api.php
 # cd sites/default
 # drush si -y movie_catalog --db-url="mysql://root@localhost/movie_catalog" --site-name="Movie Catalog" --account-name=admin --account-pass=password --sites-subdir=default
 echo "[Info] Installation finished."
-echo
 echo Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile
 echo
-echo To use the IMDB script, add these lines to the .htaccess file on the Drupal root, just below RewriteBase \
-echo "RewriteCond %{REQUEST_URI} ^\/([a-z]{2}\/)?api\/.*"
-echo "RewriteRule ^(.*)$ api.php?q=$1 [L,QSA]"
-echo "RewriteCond %{QUERY_STRING} (^|&)q=(\/)?(\/)?api\/.*"
-echo "RewriteRule .* api.php [L]"
+echo "To use the IMDB script, add these lines to the ${INSTALL_DIR}/.htaccess, just below RewriteBase \\"
+echo "RewriteCond %{REQUEST_URI} ^\\\/([a-z]{2}\\\/)?api\\\/.*\r\nRewriteRule ^(.*)$ api.php?q=$1 [L,QSA]\r\nRewriteCond %{QUERY_STRING} (^|&)q=(\\\/)?(\\\/)?api\\\/.*\r\nRewriteRule .* api.php [L]"
+echo
