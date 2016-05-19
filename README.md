@@ -30,11 +30,9 @@ Installation
   5 - Run the install script specifying the folder where you want the site to be created i.e.
   $ sh ./install.sh /Users/marcelo/Sites/movie_catalog
 
-  6 - Open the site in your browser and perform a  Drupal installation, selecting Movie Catalog profile
+  6 - Create a database and configure your vhost pointing to the folder specified in 5
 
-  7 - Create a database and configure your vhost pointing to the folder specified in 5
-
-  8 - Visit the site url and run the installation choosing Movie Catalog profile
+  7 - Open the site in your browser and perform a Drupal installation, selecting Movie Catalog profile
 
 IMDB script
 ===========
