@@ -33,7 +33,7 @@ ln -s profiles/movie_catalog/api.php api.php
 #      rm -f $file.old
 #    fi
 #
-#    sed 's/RewriteBase \/$/RewriteBase \/\n\nRewriteCond %{REQUEST_URI} ^\\\/([a-z]{2}\\\/)?api\\\/.*\r\nRewriteRule ^(.*)$ api.php?q=$1 [L,QSA]\r\nRewriteCond %{QUERY_STRING} \(^|\&\)q=(\\\/)?(\\\/)?api\\\/.*\nRewriteRule .* api.php [L]\n/g' $file > $file.new
+#    sed 's/RewriteBase \/$/RewriteBase \/\n\nRewriteCond %{REQUEST_URI} ^\\\/([a-z]{2}\\\/)?api\\\/.*\r\nRewriteRule ^(.*)$ api.php?q=\$1 [L,QSA]\r\nRewriteCond %{QUERY_STRING} \(^|\&\)q=(\\\/)?(\\\/)?api\\\/.*\nRewriteRule .* api.php [L]\n/g' $file > $file.new
 #    mv $file $file.old
 #    mv $file.new $file
 #done
