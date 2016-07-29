@@ -6,10 +6,10 @@ projects[search_api_db][subdir] = contrib
 projects[search_api_db][version] = 1.5
 
 projects[search_api][subdir] = contrib
-projects[search_api][version] = 1.18
+projects[search_api][version] = 1.20
 
 projects[search_api_page][subdir] = contrib
-projects[search_api_page][version] = 1.2
+projects[search_api_page][version] = 1.3
 
 projects[facetapi][subdir] = contrib
 projects[facetapi][version] = 1.5
@@ -51,7 +51,7 @@ projects[token][subdir] = contrib
 projects[token][version] = 1.6
 
 projects[views][subdir] = contrib
-projects[views][version] = 3.13
+projects[views][version] = 3.14
 
 projects[entitycache][subdir] = contrib
 projects[entitycache][version] = 1.5
@@ -85,7 +85,7 @@ projects[tao] = 3.1
 projects[tao][type] = theme
 projects[tao][subdir] = contrib
 
-projects[rubik] = 4.3
+projects[rubik] = 4.4
 projects[rubik][type] = theme
 projects[rubik][subdir] = contrib
 
